@@ -13,10 +13,10 @@ import java.util.List;
 
 public class sensitivity_analysis {
     public static final String baseOutputDirectory = "scenarios/equil/outputs/";
-    public static final String RTOutputDirectory = "scenarios/siouxfalls-2014/outputs/Sensitivity_Analysis/ReRouteTimeAllocator";
-    public static final String RMOutputDirectory = "scenarios/siouxfalls-2014/outputs/Sensitivity_Analysis/ReRouteModeChoice";
-    public static final String TMOutputDirectory = "scenarios/siouxfalls-2014/outputs/Sensitivity_Analysis/TimeAllocatorModeChoice";
-    static String baselineConfig = "scenarios/equil/config.xml";
+    public static final String RTOutputDirectory = "scenarios/siouxfalls-2014/outputs/Sensitivity_Analysis/ReRouteTimeAllocator/";
+    public static final String RMOutputDirectory = "scenarios/siouxfalls-2014/outputs/Sensitivity_Analysis/ReRouteModeChoice/";
+    public static final String TMOutputDirectory = "scenarios/siouxfalls-2014/outputs/Sensitivity_Analysis/TimeAllocatorModeChoice/";
+    static String baselineConfig = "scenarios/siouxfalls-2014/configs/config_baseline_50iterations.xml";
 
     // Declare the array for the parameter values
     public static double[] scoringParameterValues = new double[(50 / 5) + 1];
@@ -152,8 +152,9 @@ public class sensitivity_analysis {
             Config modifiedConfig = directive.modifyConfig(baselineConfig, value);
 
             // Set up the output directory and enable overriding
-            String outputFolder = directive.getFactor1() + "_" + Math.round(value[0]*100) + directive.getFactor2() + "_" + Math.round(value[1]*100);
+            String outputFolder = Math.round(value[0]*100) + "_" + Math.round(value[1]*100);
             String outputDirectory = baseOutputDirectory + outputFolder;
+            System.out.println("OutputDirectory: " + outputDirectory);
             modifiedConfig.controller().setOutputDirectory(outputDirectory);
             modifiedConfig.controller().setOverwriteFileSetting(OutputDirectoryHierarchy.OverwriteFileSetting.deleteDirectoryIfExists);
 
