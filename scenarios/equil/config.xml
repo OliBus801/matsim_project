@@ -18,7 +18,7 @@
 	<module name="controler">
 		<param name="outputDirectory" value="./output" />
 		<param name="firstIteration" value="0" />
-		<param name="lastIteration" value="10" />
+		<param name="lastIteration" value="5" />
 	</module>
 
 	<module name="qsim">
@@ -62,5 +62,18 @@
 		<param name="ModuleProbability_2" value="0.1" />
 		<param name="Module_2" value="ReRoute" />
 	</module>
+	
+	<module name="counts">
+    <!--  Transport modes that will be respected for the counts comparison. 'car' is default, which includes also bussed from the pt simulation module. Use this parameter in combination with 'filterModes' = true!  -->
+    <param name="analyzedModes" value="car"/>
+    <!--  Specifies over how many iterations the link volumes should be averaged that are used for the counts comparison. Use 1 or 0 to only use the link volumes of a single iteration. This values cannot be larger than the value specified for writeCountsInterval  -->
+    <param name="averageCountsOverIterations" value="1"/>
+    <!--  input file name to counts package  -->
+    <param name="inputCountsFile" value="./counts100.xml"/>
+    <!--  possible values: `html', `txt', `all'  -->
+    <param name="outputformat" value="all"/>
+    <!--  Specifies how often the counts comparison should be calculated and written.  -->
+    <param name="writeCountsInterval" value="5"/>
+  </module>
 
 </config>
