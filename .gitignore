@@ -24,3 +24,6 @@ hs_err_pid*
 # IntelliJ
 /.idea/
 *.iml
+
+# Scenarios
+scenarios/siouxfalls-2014/outputs/*
