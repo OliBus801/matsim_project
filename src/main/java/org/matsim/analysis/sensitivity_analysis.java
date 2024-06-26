@@ -12,7 +12,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class sensitivity_analysis {
-    public static final String baseOutputDirectory = "scenarios/equil/outputs/";
+    public static final String baseOutputDirectory = "scenarios/siouxfalls-2014/outputs/Sensitivity_Analysis_OFAT/";
     public static final String RTOutputDirectory = "scenarios/siouxfalls-2014/outputs/Sensitivity_Analysis/ReRouteTimeAllocator/";
     public static final String RMOutputDirectory = "scenarios/siouxfalls-2014/outputs/Sensitivity_Analysis/ReRouteModeChoice/";
     public static final String TMOutputDirectory = "scenarios/siouxfalls-2014/outputs/Sensitivity_Analysis/TimeAllocatorModeChoice/";
