@@ -19,19 +19,19 @@ public class sensitivity_analysis {
     static String baselineConfig = "scenarios/siouxfalls-2014/configs/config_baseline_50iterations.xml";
 
     // Declare the array for the parameter values
-    public static double[] scoringParameterValues = new double[(50 / 5) + 1];
-    public static double[] negativeScoringParameterValues = new double[(50 / 5) + 1];
+    public static double[] base10ParameterValues = new double[6];
+    public static double[] negativeBase10ParameterValues = new double[6];
+    public static double[] inverseBase10ParameterValues = new double[6];
     public static double[] replanningParameterValues = new double[9];
     public static double[] halvedFactorialReplanningParameterValues = new double[32];
 
 
     public static void main(String[] args){
         // We populate the array for the parameter values
-        for (int i = 0; i < scoringParameterValues.length; i++) {
-            scoringParameterValues[i] = i * 5;
-        }
-        for (int i = 0; i < negativeScoringParameterValues.length; i++) {
-            negativeScoringParameterValues[i] = -(i * 5);
+        for (int i = 0; i < base10ParameterValues.length; i++) {
+            base10ParameterValues[i] = (int) Math.pow(10, i);
+            negativeBase10ParameterValues[i] = -1 * Math.pow(10, i);
+            inverseBase10ParameterValues[i] = Math.pow(10, -i);
         }
         for (int i = 0; i < replanningParameterValues.length; i++) {
             replanningParameterValues[i] = Math.round((i * 0.1 + 0.1) * 10) / 10.0;
@@ -44,22 +44,22 @@ public class sensitivity_analysis {
         ScoringSimulationDirective moneyScoringSimulationDirective =
                 new ScoringSimulationDirective(
                         "MarginalUtilityOfMoney",
-                        scoringParameterValues);
+                        inverseBase10ParameterValues);
 
         ScoringSimulationDirective performingScoringSimulationDirective =
                 new ScoringSimulationDirective(
                         "MarginalUtilityOfPerforming",
-                        scoringParameterValues);
+                        base10ParameterValues);
 
         ScoringSimulationDirective lateArrivalScoringSimulationDirective =
                 new ScoringSimulationDirective(
                         "MarginalUtilityOfLateArrival",
-                        scoringParameterValues);
+                        negativeBase10ParameterValues);
 
         ScoringSimulationDirective travelingScoringSimulationDirective =
                 new ScoringSimulationDirective(
                         "MarginalUtilityOfTraveling",
-                        negativeScoringParameterValues);
+                        negativeBase10ParameterValues);
 
         ReplanningSimulationDirective rerouteReplanningSimulationDirective =
                 new ReplanningSimulationDirective(
@@ -96,10 +96,10 @@ public class sensitivity_analysis {
 
         // List of simulation directives (can be expanded if needed)
         List<SimulationDirective> simulationDirectives = Arrays.asList(
-                moneyScoringSimulationDirective
-                //performingScoringSimulationDirective,
-                //lateArrivalScoringSimulationDirective,
-                //travelingScoringSimulationDirective,
+                moneyScoringSimulationDirective,
+                performingScoringSimulationDirective,
+                lateArrivalScoringSimulationDirective,
+                travelingScoringSimulationDirective
                 //rerouteReplanningSimulationDirective,
                 //timeAllocationReplanningSimulationDirective,
                 //modeChoiceReplanningSimulationDirective
@@ -107,7 +107,7 @@ public class sensitivity_analysis {
 
 
 
-/*        // Running OFAT Simulations
+        // Running OFAT Simulations
         System.out.println("Starting OFAT Simulations...");
 
         for (SimulationDirective directive : simulationDirectives) {
@@ -115,14 +115,14 @@ public class sensitivity_analysis {
             System.out.println("Starting directive " + directive);
             System.out.println("Output directory: " + outputDirectory );
             runSimulations(directive, baselineConfig, outputDirectory);
-        }*/
+        }
 
-        System.out.println("Starting Factorial Simulations...");
+/*        System.out.println("Starting Factorial Simulations...");
 
         // Running Factorial Simulations
         runFactorialSimulations(factorialReplanningSimulationDirective1, baselineConfig, RTOutputDirectory);
         runFactorialSimulations(factorialReplanningSimulationDirective2, baselineConfig, RMOutputDirectory);
-        runFactorialSimulations(factorialReplanningSimulationDirective3, baselineConfig, TMOutputDirectory);
+        runFactorialSimulations(factorialReplanningSimulationDirective3, baselineConfig, TMOutputDirectory);*/
     }
 
     public static void runSimulations(SimulationDirective directive, String baselineConfig, String baseOutputDirectory) {
