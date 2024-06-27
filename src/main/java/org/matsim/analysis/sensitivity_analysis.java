@@ -20,8 +20,8 @@ public class sensitivity_analysis {
 
     // Declare the array for the parameter values
     public static double[] base10ParameterValues = new double[6];
-    public static double[] negativeBase10ParameterValues = new double[9];
-    public static double[] inverseBase10ParameterValues = new double[6];
+    public static double[] negativeBase10ParameterValues = new double[6];
+    public static double[] inverseBase10ParameterValues = new double[9];
     public static double[] replanningParameterValues = new double[9];
     public static double[] halvedFactorialReplanningParameterValues = new double[32];
 
