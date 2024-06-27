@@ -20,7 +20,7 @@ public class sensitivity_analysis {
 
     // Declare the array for the parameter values
     public static double[] base10ParameterValues = new double[6];
-    public static double[] negativeBase10ParameterValues = new double[6];
+    public static double[] negativeBase10ParameterValues = new double[9];
     public static double[] inverseBase10ParameterValues = new double[6];
     public static double[] replanningParameterValues = new double[9];
     public static double[] halvedFactorialReplanningParameterValues = new double[32];
@@ -31,10 +31,10 @@ public class sensitivity_analysis {
         for (int i = 0; i < base10ParameterValues.length; i++) {
             base10ParameterValues[i] = (int) Math.pow(10, i);
             negativeBase10ParameterValues[i] = -1 * Math.pow(10, i);
-            inverseBase10ParameterValues[i] = Math.pow(10, -i);
         }
         for (int i = 0; i < replanningParameterValues.length; i++) {
             replanningParameterValues[i] = Math.round((i * 0.1 + 0.1) * 10) / 10.0;
+            inverseBase10ParameterValues[i] = i * 0.25;
         }
         for (int i = 0; i < halvedFactorialReplanningParameterValues.length; i++) {
             halvedFactorialReplanningParameterValues[i] = Math.round((i * 0.1 + 0.1) * 10) / 10.0;
@@ -44,7 +44,7 @@ public class sensitivity_analysis {
         ScoringSimulationDirective moneyScoringSimulationDirective =
                 new ScoringSimulationDirective(
                         "MarginalUtilityOfMoney",
-                        inverseBase10ParameterValues);
+                        new double[]{0.0, 0.1, 0.2, 0.3});
 
         ScoringSimulationDirective performingScoringSimulationDirective =
                 new ScoringSimulationDirective(
@@ -96,10 +96,10 @@ public class sensitivity_analysis {
 
         // List of simulation directives (can be expanded if needed)
         List<SimulationDirective> simulationDirectives = Arrays.asList(
-                moneyScoringSimulationDirective,
-                performingScoringSimulationDirective,
-                lateArrivalScoringSimulationDirective,
-                travelingScoringSimulationDirective
+                moneyScoringSimulationDirective
+                //performingScoringSimulationDirective,
+                //lateArrivalScoringSimulationDirective,
+                //travelingScoringSimulationDirective
                 //rerouteReplanningSimulationDirective,
                 //timeAllocationReplanningSimulationDirective,
                 //modeChoiceReplanningSimulationDirective
