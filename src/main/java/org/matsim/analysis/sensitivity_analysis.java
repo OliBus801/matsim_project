@@ -131,7 +131,7 @@ public class sensitivity_analysis {
             Config modifiedConfig = directive.modifyConfig(baselineConfig, value);
 
             // Set up the output directory and enable overriding
-            String outputFolder = directive.getParameterName() + "_" + value;
+            String outputFolder = String.valueOf(value);
             String outputDirectory = baseOutputDirectory + outputFolder;
             modifiedConfig.controller().setOutputDirectory(outputDirectory);
             modifiedConfig.controller().setOverwriteFileSetting(OutputDirectoryHierarchy.OverwriteFileSetting.deleteDirectoryIfExists);
