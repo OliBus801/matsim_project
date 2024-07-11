@@ -1,5 +1,5 @@
-<?xml version="1.0" ?>
-<counts name="baseline_seed24" desc="This is the volume count from a simulated run made with the basic configurations on the Sioux Falls Scenario. The random seed used was 24." year="2024">
+<?xml version='1.0' encoding='utf-8'?>
+<counts xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://matsim.org/files/dtd/counts_v1.xsd" name="baseline_seed24" desc="This is the volume count from a simulated run made with the basic configurations on the Sioux Falls Scenario. The random seed used was 24." year="2024">
   <count loc_id="10_1" cs_id="simulated_link_10_1">
     <volume h="1" val="0"/>
     <volume h="2" val="0"/>
