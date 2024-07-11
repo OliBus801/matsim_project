@@ -12,7 +12,7 @@ public class RandomSeedAnalysis {
     public static final String fixedRandomSeedMultipleThreadsDirectory = baseOutputDirectory + "fixedRandomSeedMultipleThreads/";
     public static final String fixedRandomSeedSingleThreadDirectory = baseOutputDirectory + "fixedRandomSeedSingleThread/";
     public static final String RandomSeedSingleThreadDirectory = baseOutputDirectory + "RandomSeedMultipleThreads/";
-    static String baselineConfig = "scenarios/equil/config.xml";
+    static String baselineConfig = "scenarios/siouxfalls-2014/configs/config_baseline_randomseed";
 
     public static List<List<Object>> experiments = new ArrayList<>();
 
