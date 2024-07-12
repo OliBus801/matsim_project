@@ -5,6 +5,7 @@
 
 	  <module name="global">
 		  <param name="randomSeed" value="24" />
+		  <param name="numberOfThreads" value="1"/>
 	  </module>
 
     <module name="network">
@@ -195,6 +196,19 @@
 		<!-- Specifies how often the counts comparison should be calculated and written. -->
 		<param name="writeCountsInterval" value="50" />
 	</module>
+	
+	  <module name="eventsManager">
+    <!--  Estimated number of events during mobsim run. An optional optimization hint for the framework.  -->
+    <param name="estimatedNumberOfEvents" value="null"/>
+    <!--  Size of the events Queue. Increase for very large scenarios  -->
+    <param name="eventsQueueSize" value="131072"/>
+    <!--  Number of threads for parallel events handler. _null_ means the framework decides by itself. 0 is currently not possible.  -->
+    <param name="numberOfThreads" value="1"/>
+    <!--  If enabled, each event handler is assigned to its own thread. Note that enabling this feature disabled the numberOfThreads option! This feature is still experimental!  -->
+    <param name="oneThreadPerHandler" value="false"/>
+    <!--  If enabled, it is ensured that all events that are created during a time step of the mobility simulation are processed before the next time step is simulated. E.g. neccessary when within-day replanning is used.  -->
+    <param name="synchronizeOnSimSteps" value="true"/>
+  </module>
 
 
 </config>
