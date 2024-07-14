@@ -11,7 +11,7 @@ public class test {
     public static final String baseOutputDirectory = "scenarios/siouxfalls-2014/outputs/RandomSeedAnalysis/";
     public static final String fixedRandomSeedMultipleThreadsDirectory = baseOutputDirectory + "fixedRandomSeedMultipleThreads_Extreme/";
     public static final String fixedRandomSeedSingleThreadDirectory = baseOutputDirectory + "Baseline/";
-    static String baselineConfig = "scenarios/siouxfalls-2014/configs/config_baseline_randomseed.xml";
+    static String baselineConfig = "scenarios/siouxfalls-2014/configs/config_baseline_MultiThread_RandomSeed24.xml";
 
     public static List<List<Object>> experiments = new ArrayList<>();
 
