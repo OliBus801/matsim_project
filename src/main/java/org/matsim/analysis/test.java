@@ -9,6 +9,7 @@ import java.util.*;
 public class test {
 
     public static final String baseOutputDirectory = "scenarios/siouxfalls-2014/outputs/RandomSeedAnalysis/";
+    public static final String fixedRandomSeedMultipleThreadsDirectory = baseOutputDirectory + "fixedRandomSeedMultipleThreads_Extreme/";
     public static final String fixedRandomSeedSingleThreadDirectory = baseOutputDirectory + "Baseline/";
     static String baselineConfig = "scenarios/siouxfalls-2014/configs/config_baseline_randomseed.xml";
 
@@ -18,7 +19,7 @@ public class test {
 
         // Adding Experiments Parameters into a list
         for (int i = 1; i < 11; i++) {
-            experiments.add(Arrays.asList((long) 24, 1, fixedRandomSeedSingleThreadDirectory + i));
+            experiments.add(Arrays.asList((long) 24, 4, fixedRandomSeedMultipleThreadsDirectory + i));
         }
 
         // Iterate through the list
