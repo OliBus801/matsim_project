@@ -19,7 +19,7 @@ public class test {
 
         // Adding Experiments Parameters into a list
         for (int i = 1; i < 11; i++) {
-            experiments.add(Arrays.asList((long) 24, 4, fixedRandomSeedMultipleThreadsDirectory + i));
+            experiments.add(Arrays.asList((long) 24, 7, fixedRandomSeedMultipleThreadsDirectory + i));
         }
 
         // Iterate through the list
