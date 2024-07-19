@@ -183,15 +183,15 @@
         <param name="vehiclesFile" value="../Siouxfalls_vehicles.xml" />
         <param name="transitModes" value="pt,bus" />
     </module>
-    <!--
+    
     <module name="counts" >
             <param name="analyzedModes" value="car" />
             <param name="averageCountsOverIterations" value="1" />
             <param name="inputCountsFile" value="../baseline_counts.xml" />
             <param name="outputformat" value="txt" />
             <param name="writeCountsInterval" value="50" />
-        </module>
-    -->
+      </module>
+        
     <module name="eventsManager">
         <!--  Estimated number of events during mobsim run. An optional optimization hint for the framework.  -->
         <param name="estimatedNumberOfEvents" value="null"/>

@@ -13,96 +13,75 @@ import java.util.List;
 
 public class sensitivity_analysis {
     public static final String baseOutputDirectory = "scenarios/siouxfalls-2014/outputs/Sensitivity_Analysis_OFAT/";
-    public static final String RTOutputDirectory = "scenarios/siouxfalls-2014/outputs/Sensitivity_Analysis/ReRouteTimeAllocator/";
-    public static final String RMOutputDirectory = "scenarios/siouxfalls-2014/outputs/Sensitivity_Analysis/ReRouteModeChoice/";
-    public static final String TMOutputDirectory = "scenarios/siouxfalls-2014/outputs/Sensitivity_Analysis/TimeAllocatorModeChoice/";
     static String baselineConfig = "scenarios/siouxfalls-2014/configs/config_baseline_50iterations.xml";
-
-    // Declare the array for the parameter values
-    public static double[] base10ParameterValues = new double[6];
-    public static double[] negativeBase10ParameterValues = new double[6];
-    public static double[] inverseBase10ParameterValues = new double[9];
-    public static double[] replanningParameterValues = new double[9];
-    public static double[] halvedFactorialReplanningParameterValues = new double[32];
 
 
     public static void main(String[] args){
-        // We populate the array for the parameter values
-        for (int i = 0; i < base10ParameterValues.length; i++) {
-            base10ParameterValues[i] = (int) Math.pow(10, i);
-            negativeBase10ParameterValues[i] = -1 * Math.pow(10, i);
-        }
-        for (int i = 0; i < replanningParameterValues.length; i++) {
-            replanningParameterValues[i] = Math.round((i * 0.1 + 0.1) * 10) / 10.0;
-            inverseBase10ParameterValues[i] = i * 0.25;
-        }
-        for (int i = 0; i < halvedFactorialReplanningParameterValues.length; i++) {
-            halvedFactorialReplanningParameterValues[i] = Math.round((i * 0.1 + 0.1) * 10) / 10.0;
-        }
 
         // We create the SimulationDirective objects for each set of test
         ScoringSimulationDirective moneyScoringSimulationDirective =
                 new ScoringSimulationDirective(
                         "MarginalUtilityOfMoney",
-                        base10ParameterValues);
+                        new double[]{0.0019375, 0.003875, 0.00775, 0.0155, 0.031, 0.062, 0.124, 0.248, 0.496, 0.992, 1.984});
 
         ScoringSimulationDirective performingScoringSimulationDirective =
                 new ScoringSimulationDirective(
                         "MarginalUtilityOfPerforming",
-                        base10ParameterValues);
+                        new double[]{0.03, 0.06, 0.12, 0.24, 0.48, 0.96, 1.92, 3.84, 7.68, 15.36, 30.72});
 
         ScoringSimulationDirective lateArrivalScoringSimulationDirective =
                 new ScoringSimulationDirective(
                         "MarginalUtilityOfLateArrival",
-                        negativeBase10ParameterValues);
+                        new double[]{-0.5625, -1.125, -2.25, -4.5, -9, -18, -36, -72, -144, -288, -576});
 
-        ScoringSimulationDirective travelingScoringSimulationDirective =
+        ScoringSimulationDirective travelingCarScoringSimulationDirective =
                 new ScoringSimulationDirective(
-                        "MarginalUtilityOfTraveling",
-                        negativeBase10ParameterValues);
+                        "MarginalUtilityOfTraveling_Car",
+                        new double[]{0.0, -0.01125, -0.0225, -0.045, -0.09, -0.18, -0.36, -0.72, -1.44, -2.88, -5.76});
+
+        ScoringSimulationDirective travelingPtScoringSimulationDirective =
+                new ScoringSimulationDirective(
+                        "MarginalUtilityOfTraveling_Pt",
+                        new double[]{-0.005625, -0.01125, -0.0225, -0.045, -0.09, -0.18, -0.36, -0.72, -1.44, -2.88, -5.76});
+
+        ScoringSimulationDirective travelingWalkScoringSimulationDirective =
+                new ScoringSimulationDirective(
+                        "MarginalUtilityOfTraveling_Walk",
+                        new double[]{-0.035625, -0.07125, -0.1425, -0.285, -0.57, -1.14, -2.28, -4.56, -9.12, -18.24, -36.48});
 
         ReplanningSimulationDirective rerouteReplanningSimulationDirective =
                 new ReplanningSimulationDirective(
                         "ReRoute",
-                        replanningParameterValues);
+                        new double[]{0.003125, 0.00625, 0.0125, 0.025, 0.05, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6});
 
         ReplanningSimulationDirective timeAllocationReplanningSimulationDirective =
                 new ReplanningSimulationDirective(
                         "TimeAllocationMutator",
-                        replanningParameterValues);
+                        new double[]{0.003125, 0.00625, 0.0125, 0.025, 0.05, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6});
 
         ReplanningSimulationDirective modeChoiceReplanningSimulationDirective =
                 new ReplanningSimulationDirective(
                         "SubtourModeChoice",
-                        replanningParameterValues);
+                        new double[]{0.003125, 0.00625, 0.0125, 0.025, 0.05, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6});
 
-        FactorialReplanningSimulationDirective factorialReplanningSimulationDirective1 =
+        // Factorial Simulation Directive Artifacts
+        /**FactorialReplanningSimulationDirective factorialReplanningSimulationDirective1 =
                 new FactorialReplanningSimulationDirective(
                         "ReRoute",
                         "TimeAllocationMutator",
-                        new double[]{0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8});
+                        new double[]{0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8});**/
 
-        FactorialReplanningSimulationDirective factorialReplanningSimulationDirective2 =
-                new FactorialReplanningSimulationDirective(
-                        "ReRoute",
-                        "SubtourModeChoice",
-                        new double[]{0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8});
 
-        FactorialReplanningSimulationDirective factorialReplanningSimulationDirective3 =
-                new FactorialReplanningSimulationDirective(
-                        "SubtourModeChoice",
-                        "TimeAllocationMutator",
-                        new double[]{0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8});
-
-        // List of simulation directives (can be expanded if needed)
         List<SimulationDirective> simulationDirectives = Arrays.asList(
-                moneyScoringSimulationDirective
-                //performingScoringSimulationDirective,
-                //lateArrivalScoringSimulationDirective,
-                //travelingScoringSimulationDirective
-                //rerouteReplanningSimulationDirective,
-                //timeAllocationReplanningSimulationDirective,
-                //modeChoiceReplanningSimulationDirective
+                moneyScoringSimulationDirective,
+                performingScoringSimulationDirective,
+                lateArrivalScoringSimulationDirective,
+                travelingCarScoringSimulationDirective,
+                travelingPtScoringSimulationDirective,
+                travelingWalkScoringSimulationDirective,
+                rerouteReplanningSimulationDirective,
+                timeAllocationReplanningSimulationDirective,
+                modeChoiceReplanningSimulationDirective
         );
 
 

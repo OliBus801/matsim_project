@@ -25,10 +25,6 @@ public class ReplanningSimulationDirective extends SimulationDirective{
         for(org.matsim.core.config.groups.ReplanningConfigGroup.StrategySettings strategy : strategies){
             if(Objects.equals(getParameterName(), strategy.getStrategyName())){
                 strategy.setWeight(value);
-            } else if (Objects.equals("ChangeExpBeta", strategy.getStrategyName())) {
-                strategy.setWeight(1 - value);
-            } else {
-                strategy.setWeight(0.0);
             }
         }
 

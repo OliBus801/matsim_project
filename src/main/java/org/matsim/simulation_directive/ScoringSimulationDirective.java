@@ -26,14 +26,11 @@ public class ScoringSimulationDirective extends SimulationDirective {
         if(Objects.equals(getParameterName(), "MarginalUtilityOfMoney")){scoringConfigGroup.setMarginalUtilityOfMoney(value);}
         else if (Objects.equals(getParameterName(), "MarginalUtilityOfPerforming")){scoringConfigGroup.setPerforming_utils_hr(value);}
         else if (Objects.equals(getParameterName(), "MarginalUtilityOfLateArrival")) {scoringConfigGroup.setLateArrival_utils_hr(value);}
-        else if (Objects.equals(getParameterName(), "MarginalUtilityOfTraveling")) {
-            // As of right now, we only implement the option to change the utility for all mode
-            Map<String, ScoringConfigGroup.ModeParams> allModes = scoringConfigGroup.getModes();
-            for (Map.Entry<String, ScoringConfigGroup.ModeParams> modeEntry : allModes.entrySet()) {
-                ScoringConfigGroup.ModeParams modeParams = modeEntry.getValue();
-                modeParams.setMarginalUtilityOfTraveling(value);
-            }
-        }
+        else if (Objects.equals(getParameterName(), "MarginalUtilityOfTraveling_Car")) {scoringConfigGroup.getModes().get("car").setMarginalUtilityOfTraveling(value);}
+        else if (Objects.equals(getParameterName(), "MarginalUtilityOfTraveling_Pt")) {scoringConfigGroup.getModes().get("pt").setMarginalUtilityOfTraveling(value);}
+        else if (Objects.equals(getParameterName(), "MarginalUtilityOfTraveling_Walk")) {scoringConfigGroup.getModes().get("walk").setMarginalUtilityOfTraveling(value);}
+
+
 
         return config;
     }
