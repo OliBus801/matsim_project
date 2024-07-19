@@ -3,8 +3,7 @@
 <config>
 
 	<module name="global">
-		<param name="randomSeed" value="4711" />
-		<param name="coordinateSystem" value="Atlantis" />
+		<param name="randomSeed" value="24" />
 	</module>
 
 	<module name="network">
@@ -16,9 +15,9 @@
 	</module>
 
 	<module name="controller">
-		<param name="outputDirectory" value="./output" />
+		<param name="outputDirectory" value="./outputs/3" />
 		<param name="firstIteration" value="0" />
-		<param name="lastIteration" value="5" />
+		<param name="lastIteration" value="50" />
 	</module>
 
 	<module name="qsim">
