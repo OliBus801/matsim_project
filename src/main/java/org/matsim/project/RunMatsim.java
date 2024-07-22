@@ -35,7 +35,7 @@ public class RunMatsim{
 
 		Config config;
 		if ( args==null || args.length==0 || args[0]==null ){
-			config = ConfigUtils.loadConfig( "scenarios/equil/conexfig.xml" );
+			config = ConfigUtils.loadConfig( "scenarios/siouxfalls-2014/configs/config_baseline_50iterations.xml" );
 		} else {
 			config = ConfigUtils.loadConfig( args );
 		}
