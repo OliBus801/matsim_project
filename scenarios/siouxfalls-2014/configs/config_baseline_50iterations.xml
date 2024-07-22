@@ -4,7 +4,7 @@
 <config>
 
     <module name="global">
-        <param name="randomSeed" value="7621" />
+        <param name="randomSeed" value="24" />
         <param name="numberOfThreads" value="1"/>
     </module>
 

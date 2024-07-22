@@ -18,7 +18,7 @@ public class ScoringSimulationDirective extends SimulationDirective {
         // Load the config from the baseline config path
         Config config = ConfigUtils.loadConfig(config_path);
 
-        // Get the PlanCalcScoreConfigGroup Module
+        // Get the ScoringConfigGroup Module
         ScoringConfigGroup scoringConfigGroup = ConfigUtils.addOrGetModule(config,
                 ScoringConfigGroup.GROUP_NAME, ScoringConfigGroup.class);
 
