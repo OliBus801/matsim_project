@@ -2,7 +2,9 @@ package org.matsim.analysis;
 import org.matsim.core.config.Config;
 import org.matsim.core.config.ConfigUtils;
 import org.matsim.core.config.groups.GlobalConfigGroup;
+import org.matsim.core.config.groups.ScoringConfigGroup;
 import org.matsim.core.controler.Controler;
+import org.matsim.core.gbl.MatsimRandom;
 
 import java.util.*;
 
@@ -38,8 +40,8 @@ public class RandomSeedAnalysis {
 
             experiments.add(Arrays.asList(brainExpConfig, randomNumber1, base10, 0.0, brainExpOutputDirectory + "/base10/" + base10));
             experiments.add(Arrays.asList(brainExpConfig, randomNumber2, base2, 0.0, brainExpOutputDirectory + "/base2/" + base2));
-            experiments.add(Arrays.asList(pathLogitConfig, randomNumber3, 0.0, base10, pathSizeOutputDirectory + "/base10/" + base10));
-            experiments.add(Arrays.asList(pathLogitConfig, randomNumber4, 0.0, base2, pathSizeOutputDirectory + "/base2/" + base2));
+            //experiments.add(Arrays.asList(pathLogitConfig, randomNumber3, 0.0, base10, pathSizeOutputDirectory + "/base10/" + base10));
+            //experiments.add(Arrays.asList(pathLogitConfig, randomNumber4, 0.0, base2, pathSizeOutputDirectory + "/base2/" + base2));
         }
 
         // Shuffle the list
@@ -48,16 +50,21 @@ public class RandomSeedAnalysis {
         // Iterate through the list
         for(List<Object> experiment: experiments){
             System.out.println("Running Experiment: " + experiment);
+            MatsimRandom.reset((Long) experiment.get(1));
+
 
             // Load the baseline config and add a globalConfigGroup
-            Config config = ConfigUtils.loadConfig(experiment.get(0).toString());
+            Config config = ConfigUtils.loadConfig((String) experiment.get(0));
+            ScoringConfigGroup scoringConfigGroup = ConfigUtils.addOrGetModule(config, ScoringConfigGroup.GROUP_NAME,
+                    ScoringConfigGroup.class);
             GlobalConfigGroup globalConfigGroup = ConfigUtils.addOrGetModule(config, GlobalConfigGroup.GROUP_NAME,
                     GlobalConfigGroup.class);
 
             // Modify the config
-            globalConfigGroup.setRandomSeed((Long) experiment.get(0));
-            globalConfigGroup.setNumberOfThreads((Integer) experiment.get(1));
-            config.controller().setOutputDirectory((String) experiment.get(2));
+            globalConfigGroup.setRandomSeed((Long) experiment.get(1));
+            scoringConfigGroup.setBrainExpBeta((Double) experiment.get(2));
+            scoringConfigGroup.setPathSizeLogitBeta((Double) experiment.get(3));
+            config.controller().setOutputDirectory((String) experiment.get(4));
 
             // Run the simulation
             Controler controler = new Controler(config);
