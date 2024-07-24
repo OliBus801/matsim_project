@@ -1,3 +1,4 @@
+
 /* *********************************************************************** *
  * project: org.matsim.*												   *
  *                                                                         *
@@ -35,7 +36,7 @@ public class RunMatsim{
 
 		Config config;
 		if ( args==null || args.length==0 || args[0]==null ){
-			config = ConfigUtils.loadConfig( "scenarios/siouxfalls-2014/configs/config_baseline_50iterations.xml" );
+			config = ConfigUtils.loadConfig( "scenarios/equil/config.xml" );
 		} else {
 			config = ConfigUtils.loadConfig( args );
 		}
@@ -45,24 +46,24 @@ public class RunMatsim{
 		// possibly modify config here
 
 		// ---
-		
+
 		Scenario scenario = ScenarioUtils.loadScenario(config) ;
 
 		// possibly modify scenario here
-		
+
 		// ---
-		
+
 		Controler controler = new Controler( scenario ) ;
-		
+
 		// possibly modify controler here
 
 //		controler.addOverridingModule( new OTFVisLiveModule() ) ;
 
 //		controler.addOverridingModule( new SimWrapperModule() );
-		
+
 		// ---
-		
+
 		controler.run();
 	}
-	
+
 }

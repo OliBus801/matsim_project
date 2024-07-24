@@ -4,7 +4,6 @@
 <config>
 
 	  <module name="global">
-		  <param name="randomSeed" value="24" />
 		  <param name="numberOfThreads" value="1"/>
 	  </module>
 
@@ -25,7 +24,7 @@
         <param name="writeEventsInterval" value="50" />
         <param name="writePlansInterval" value="50" />
         <param name="eventsFileFormat" value="xml" />
-        <param name="outputDirectory" value="../outputs/RandomSeed24/10"/>
+        <param name="outputDirectory" value="../outputs/RandomSeed24/1"/>
         <param name="firstIteration" value="0" />
         <param name="lastIteration" value="50" />
         <param name="mobsim" value="qsim" />

@@ -12,7 +12,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class sensitivity_analysis {
-    public static final String baseOutputDirectory = "scenarios/siouxfalls-2014/outputs/Sensitivity_Analysis_OFAT/";
+    public static final String baseOutputDirectory = "scenarios/siouxfalls-2014/outputs/ExpBeta_Preliminary/";
     static String baselineConfig = "scenarios/siouxfalls-2014/configs/config_baseline_50iterations.xml";
 
 

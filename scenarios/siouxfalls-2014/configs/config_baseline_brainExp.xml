@@ -4,8 +4,7 @@
 <config>
 
 	  <module name="global">
-		  <param name="randomSeed" value="24" />
-		  <param name="numberOfThreads" value="7"/>
+		  <param name="numberOfThreads" value="1"/>
 	  </module>
 
     <module name="network">
@@ -25,7 +24,7 @@
         <param name="writeEventsInterval" value="50" />
         <param name="writePlansInterval" value="50" />
         <param name="eventsFileFormat" value="xml" />
-        <param name="outputDirectory" value="../outputs/baselineRandomSeed24"/>
+        <param name="outputDirectory" value="./scenarios/siouxfalls-2014/outputs/Baseline_BrainExp/"/>
         <param name="firstIteration" value="0" />
         <param name="lastIteration" value="50" />
         <param name="mobsim" value="qsim" />
@@ -36,7 +35,7 @@
         <param name="endTime" value="30:00:00" />
         <param name="flowCapacityFactor" value="1.00" />
         <param name="storageCapacityFactor" value="1.00" />
-        <param name="numberOfThreads" value="7" />
+        <param name="numberOfThreads" value="1" />
         <param name = "snapshotperiod"	value = "00:00:01"/>
 
         <!-- Boolean. `true': stuck vehicles are removed, aborting the plan; `false': stuck vehicles are forced into the next link. `false' is probably the better choice. -->
@@ -190,7 +189,7 @@
 		<!-- Specifies over how many iterations the link volumes should be averaged that are used for the counts comparison. Use 1 or 0 to only use the link volumes of a single iteration. This values cannot be larger than the value specified for writeCountsInterval -->
 		<param name="averageCountsOverIterations" value="1" />
 		<!-- input file name to counts package -->
-		<param name="inputCountsFile" value="../baseline_counts_seed24.xml" />
+		<param name="inputCountsFile" value="../baseline_test_seed24.xml" />
 		<!-- possible values: `html', `txt', `all' -->
 		<param name="outputformat" value="txt" />
 		<!-- Specifies how often the counts comparison should be calculated and written. -->
@@ -203,7 +202,7 @@
     <!--  Size of the events Queue. Increase for very large scenarios  -->
     <param name="eventsQueueSize" value="131072"/>
     <!--  Number of threads for parallel events handler. _null_ means the framework decides by itself. 0 is currently not possible.  -->
-    <param name="numberOfThreads" value="null"/>
+    <param name="numberOfThreads" value="1"/>
     <!--  If enabled, each event handler is assigned to its own thread. Note that enabling this feature disabled the numberOfThreads option! This feature is still experimental!  -->
     <param name="oneThreadPerHandler" value="false"/>
     <!--  If enabled, it is ensured that all events that are created during a time step of the mobility simulation are processed before the next time step is simulated. E.g. neccessary when within-day replanning is used.  -->
