@@ -36,7 +36,7 @@ public class test {
         MatsimRandom.reset(randomSeed);
 
         // Load the config file
-        config = ConfigUtils.loadConfig(brainExpConfig);
+        config = ConfigUtils.loadConfig(pathLogitConfig);
         scenario = ScenarioUtils.loadScenario(config);
         controler = new Controler(scenario);
         controler.run();
