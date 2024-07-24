@@ -189,7 +189,7 @@
 		<!-- Specifies over how many iterations the link volumes should be averaged that are used for the counts comparison. Use 1 or 0 to only use the link volumes of a single iteration. This values cannot be larger than the value specified for writeCountsInterval -->
 		<param name="averageCountsOverIterations" value="1" />
 		<!-- input file name to counts package -->
-		<param name="inputCountsFile" value="../baseline_test_seed24.xml" />
+		<param name="inputCountsFile" value="../baselines/baseline_BrainExpBeta.xml" />
 		<!-- possible values: `html', `txt', `all' -->
 		<param name="outputformat" value="txt" />
 		<!-- Specifies how often the counts comparison should be calculated and written. -->
