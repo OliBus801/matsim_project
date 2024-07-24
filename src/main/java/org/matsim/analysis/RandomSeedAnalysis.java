@@ -34,8 +34,8 @@ public class RandomSeedAnalysis {
             if (randomNumber3 < 0) { randomNumber3 += 9999L; }
             if (randomNumber4 < 0) { randomNumber4 += 9999L; }
 
-            long base10 = Math.round(Math.pow(10, i));
-            long base2 = Math.round(Math.pow(2, i));
+            double base10 = Math.round(Math.pow(10, i));
+            double base2 = Math.round(Math.pow(2, i));
 
 
             experiments.add(Arrays.asList(brainExpConfig, randomNumber1, base10, 0.0, brainExpOutputDirectory + "/base10/" + base10));
