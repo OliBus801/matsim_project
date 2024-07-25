@@ -27,18 +27,5 @@ public class test {
         Scenario scenario = ScenarioUtils.loadScenario(config);
         Controler controler = new Controler(scenario);
         controler.run();
-
-        System.out.println("Running Experiment for baseline of pathSize...");
-
-        // Reset Random Seed
-        randomSeed = random.nextLong() % 9999L + 1;
-        if (randomSeed < 0) { randomSeed += 9999L; }
-        MatsimRandom.reset(randomSeed);
-
-        // Load the config file
-        config = ConfigUtils.loadConfig(pathLogitConfig);
-        scenario = ScenarioUtils.loadScenario(config);
-        controler = new Controler(scenario);
-        controler.run();
     }
 }

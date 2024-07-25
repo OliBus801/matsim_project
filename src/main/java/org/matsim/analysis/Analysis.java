@@ -3,18 +3,19 @@ import org.matsim.core.config.Config;
 import org.matsim.core.config.ConfigUtils;
 import org.matsim.core.config.groups.GlobalConfigGroup;
 import org.matsim.core.config.groups.ScoringConfigGroup;
+import org.matsim.core.config.groups.SubtourModeChoiceConfigGroup;
+import org.matsim.core.config.groups.TimeAllocationMutatorConfigGroup;
 import org.matsim.core.controler.Controler;
 import org.matsim.core.gbl.MatsimRandom;
 
 import java.util.*;
 
-public class RandomSeedAnalysis {
+public class Analysis {
 
-    public static final String baseOutputDirectory = "scenarios/siouxfalls-2014/outputs/ExpBeta_Preliminary/";
-    public static final String brainExpOutputDirectory = baseOutputDirectory + "brainExpBeta/";
-    public static final String pathSizeOutputDirectory = baseOutputDirectory + "pathSizeLogitBeta/";
-    static String brainExpConfig = "scenarios/siouxfalls-2014/configs/config_baseline_brainExp.xml";
-    static String pathLogitConfig = "scenarios/siouxfalls-2014/configs/config_baseline_pathSize.xml";
+    public static final String baseOutputDirectory = "scenarios/siouxfalls-2014/outputs/Preliminary_Analysis/";
+    public static final String mutationRangeOutputDirectory = baseOutputDirectory + "MutationRange/";
+    public static final String coordDistanceOutputDirectory = baseOutputDirectory + "CoordDistance/";
+    static String baselineConfig = "scenarios/siouxfalls-2014/configs/config_default_baseline.xml";
 
     public static List<List<Object>> experiments = new ArrayList<>();
 
@@ -27,22 +28,18 @@ public class RandomSeedAnalysis {
             // Generate four random (long) integers between 0 and 9999.
             long randomNumber1 = random.nextLong() % 9999L + 1;
             long randomNumber2 = random.nextLong() % 9999L + 1;
-            long randomNumber3 = random.nextLong() % 9999L + 1;
-            long randomNumber4 = random.nextLong() % 9999L + 1;
             if (randomNumber1 < 0) { randomNumber1 += 9999L; }
             if (randomNumber2 < 0) { randomNumber2 += 9999L; }
-            if (randomNumber3 < 0) { randomNumber3 += 9999L; }
-            if (randomNumber4 < 0) { randomNumber4 += 9999L; }
 
             double base10 = Math.round(Math.pow(10, i));
-            double base2 = Math.round(Math.pow(2, i));
+            double time_seconds = Math.round(Math.pow(2, i)) * 900;
 
 
-            experiments.add(Arrays.asList(brainExpConfig, randomNumber1, base10, 0.0, brainExpOutputDirectory + "/base10/" + base10));
-            experiments.add(Arrays.asList(brainExpConfig, randomNumber2, base2, 0.0, brainExpOutputDirectory + "/base2/" + base2));
-            //experiments.add(Arrays.asList(pathLogitConfig, randomNumber3, 0.0, base10, pathSizeOutputDirectory + "/base10/" + base10));
-            //experiments.add(Arrays.asList(pathLogitConfig, randomNumber4, 0.0, base2, pathSizeOutputDirectory + "/base2/" + base2));
+            experiments.add(Arrays.asList(baselineConfig, randomNumber1, time_seconds, 0.0, mutationRangeOutputDirectory  + time_seconds));
+            experiments.add(Arrays.asList(baselineConfig, randomNumber2, 1800.0, base10, coordDistanceOutputDirectory + base10));
         }
+        experiments.add(Arrays.asList(baselineConfig, 7236, 450, 0.0, mutationRangeOutputDirectory  + "450"));
+        experiments.add(Arrays.asList(baselineConfig, 8515, 1800.0, 0.0, coordDistanceOutputDirectory + "0"));
 
         // Shuffle the list
         Collections.shuffle(experiments);
@@ -53,17 +50,19 @@ public class RandomSeedAnalysis {
             MatsimRandom.reset((Long) experiment.get(1));
 
 
-            // Load the baseline config and add a globalConfigGroup
+            // Load the baseline config and add pertinent groups
             Config config = ConfigUtils.loadConfig((String) experiment.get(0));
-            ScoringConfigGroup scoringConfigGroup = ConfigUtils.addOrGetModule(config, ScoringConfigGroup.GROUP_NAME,
-                    ScoringConfigGroup.class);
+            SubtourModeChoiceConfigGroup subtourModeChoiceConfigGroup = ConfigUtils.addOrGetModule(config, SubtourModeChoiceConfigGroup.GROUP_NAME,
+                    SubtourModeChoiceConfigGroup.class);
             GlobalConfigGroup globalConfigGroup = ConfigUtils.addOrGetModule(config, GlobalConfigGroup.GROUP_NAME,
                     GlobalConfigGroup.class);
+            TimeAllocationMutatorConfigGroup timeAllocationMutatorConfigGroup = ConfigUtils.addOrGetModule(config, TimeAllocationMutatorConfigGroup.GROUP_NAME,
+                    TimeAllocationMutatorConfigGroup.class);
 
             // Modify the config
             globalConfigGroup.setRandomSeed((Long) experiment.get(1));
-            scoringConfigGroup.setBrainExpBeta((Double) experiment.get(2));
-            scoringConfigGroup.setPathSizeLogitBeta((Double) experiment.get(3));
+            timeAllocationMutatorConfigGroup.setMutationRange((Double) experiment.get(2));
+            subtourModeChoiceConfigGroup.setCoordDistance((Double) experiment.get(3));
             config.controller().setOutputDirectory((String) experiment.get(4));
 
             // Run the simulation
