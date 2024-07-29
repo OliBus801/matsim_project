@@ -24,7 +24,7 @@ public class Analysis {
         Random random = new Random();
 
         // Adding Experiments Parameters into a list
-        for (int i = 0; i < 6; i++) {
+        for (int i = 1; i < 6; i++) {
             // Generate four random (long) integers between 0 and 9999.
             long randomNumber1 = random.nextLong() % 9999L + 1;
             long randomNumber2 = random.nextLong() % 9999L + 1;
@@ -34,16 +34,17 @@ public class Analysis {
             double base10 = Math.round(Math.pow(10, i));
             double time_seconds = Math.round(Math.pow(2, i)) * 900;
 
-
-            experiments.add(Arrays.asList(baselineConfig, randomNumber1, time_seconds, 0.0, mutationRangeOutputDirectory  + time_seconds));
-            //experiments.add(Arrays.asList(baselineConfig, randomNumber2, 1800.0, base10, coordDistanceOutputDirectory + base10));
+            //experiments.add(Arrays.asList(baselineConfig, randomNumber1, time_seconds, 0.0, mutationRangeOutputDirectory  + time_seconds));
+            experiments.add(Arrays.asList(baselineConfig, randomNumber2, 3600.0, base10, coordDistanceOutputDirectory + base10));
         }
-        experiments.add(Arrays.asList(baselineConfig, 7236L, 450.0, 0.0, mutationRangeOutputDirectory  + "450"));
-        experiments.add(Arrays.asList(baselineConfig, 9294L, 3600.0, 0.0, mutationRangeOutputDirectory  + "3600_Baseline"));
-        //experiments.add(Arrays.asList(baselineConfig, 8515, 1800.0, 0.0, coordDistanceOutputDirectory + "0"));
+
+        //experiments.add(Arrays.asList(baselineConfig, 9294L, 3600.0, 0.0, mutationRangeOutputDirectory  + "3600_Baseline"));
+        experiments.add(Arrays.asList(baselineConfig, 8515L, 3600.0, 0.0, coordDistanceOutputDirectory + "Baseline_0.0"));
+        experiments.add(Arrays.asList(baselineConfig, 6005L, 3600.0, 0.0, coordDistanceOutputDirectory + "0.0"));
+        experiments.add(Arrays.asList(baselineConfig, 6123L, 3600.0, 1.0, coordDistanceOutputDirectory + "1.0"));
 
         // Shuffle the list
-        Collections.shuffle(experiments);
+        //Collections.shuffle(experiments);
 
         // Iterate through the list
         for(List<Object> experiment: experiments){
