@@ -36,9 +36,10 @@ public class Analysis {
 
 
             experiments.add(Arrays.asList(baselineConfig, randomNumber1, time_seconds, 0.0, mutationRangeOutputDirectory  + time_seconds));
-            experiments.add(Arrays.asList(baselineConfig, randomNumber2, 1800.0, base10, coordDistanceOutputDirectory + base10));
+            //experiments.add(Arrays.asList(baselineConfig, randomNumber2, 1800.0, base10, coordDistanceOutputDirectory + base10));
         }
-        //experiments.add(Arrays.asList(baselineConfig, 7236, 450, 0.0, mutationRangeOutputDirectory  + "450"));
+        experiments.add(Arrays.asList(baselineConfig, 7236L, 450.0, 0.0, mutationRangeOutputDirectory  + "450"));
+        experiments.add(Arrays.asList(baselineConfig, 9294L, 3600.0, 0.0, mutationRangeOutputDirectory  + "3600_Baseline"));
         //experiments.add(Arrays.asList(baselineConfig, 8515, 1800.0, 0.0, coordDistanceOutputDirectory + "0"));
 
         // Shuffle the list
