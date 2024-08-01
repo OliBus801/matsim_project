@@ -1,23 +1,24 @@
 package org.matsim.analysis;
 import org.matsim.core.config.ConfigUtils;
 import org.matsim.core.config.Config;
-import org.matsim.core.config.groups.ScoringConfigGroup;
+import org.matsim.core.config.groups.*;
 import org.matsim.core.controler.Controler;
 import org.matsim.core.controler.OutputDirectoryHierarchy;
+import org.matsim.core.gbl.MatsimRandom;
 
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class morris_method {
     public static final String baseOutputDirectory = "scenarios/siouxfalls-2014/outputs/Morris_Method/";
-    static String baselineConfig = "scenarios/siouxfalls-2014/configs/config_baseline_50iterations.xml";
-    static String parameterValuesCSV = "scenarios/siouxfalls-2014/configs/config_parameter_values.csv";
+    static String baselineConfig = "scenarios/siouxfalls-2014/configs/config_default_baseline.xml";
+    static String parameterValuesCSV = "scenarios/siouxfalls-2014/configs/complete_morris_method_sample.csv";
 
     public static void main(String[] args){
         String line;
-        int iterations = 0;
+        Random random = new Random();
+        int iterations = 1;
         List<double[]> parameter_values = new ArrayList<>();
 
         // Read CSV file
@@ -41,19 +42,56 @@ public class morris_method {
         System.out.println("Starting simulation runs...");
         // For each set of parameter - Run simulation comparing to baseline
         for(double[] param : parameter_values){
-            System.out.println("Setting up experiment with following parameters: [" + param[0] + ", " + param[1] + ", " + param[2] + "]");
+            System.out.println("Setting up experiment with following parameters: ");
+            System.out.println("TimeAllocationMutator: " + param[0]);
+            System.out.println("mutationRange: " + param[1]);
+            System.out.println("ReRoute: " + param[2]);
+            System.out.println("SubtourModeChoice: " + param[3]);
+            System.out.println("coordDistance: " + param[4]);
+            System.out.println("probaForRandomSingleTripMode: " + param[5]);
+            System.out.println("maxAgentPlanMemorySize: " + param[6]);
+            System.out.println("fractionOfIterationsToDisableInnovation: " + param[7]);
+            System.out.println("brainExpBeta: " + param[8]);
+
+            // Generate Random Seed
+            long randomNumber = random.nextLong() % 9999L + 1;
+            if (randomNumber < 0) { randomNumber += 9999L; }
 
             // Load the config from baseline
+            MatsimRandom.reset(randomNumber);
             Config config = ConfigUtils.loadConfig(baselineConfig);
 
-            // Get the ScoringConfigGroup Module
+            // Get the Config Groups Modules
+            GlobalConfigGroup globalConfigGroup = ConfigUtils.addOrGetModule(config,
+                    GlobalConfigGroup.GROUP_NAME, GlobalConfigGroup.class);
             ScoringConfigGroup scoringConfigGroup = ConfigUtils.addOrGetModule(config,
                     ScoringConfigGroup.GROUP_NAME, ScoringConfigGroup.class);
+            TimeAllocationMutatorConfigGroup timeAllocationMutatorConfigGroup = ConfigUtils.addOrGetModule(config,
+                    TimeAllocationMutatorConfigGroup.GROUP_NAME, TimeAllocationMutatorConfigGroup.class);
+            ReplanningConfigGroup replanningConfigGroup = ConfigUtils.addOrGetModule(config,
+                    ReplanningConfigGroup.GROUP_NAME, ReplanningConfigGroup.class);
+            SubtourModeChoiceConfigGroup subtourModeChoiceConfigGroup = ConfigUtils.addOrGetModule(config,
+                    SubtourModeChoiceConfigGroup.GROUP_NAME, SubtourModeChoiceConfigGroup.class);
 
-            // Modify the corresponding parameters
-            scoringConfigGroup.setMarginalUtilityOfMoney(param[0]);
-            scoringConfigGroup.setPerforming_utils_hr(param[1]);
-            scoringConfigGroup.setLateArrival_utils_hr(param[2]);
+            // Get the replanning strategies and modify its weight
+            Collection<ReplanningConfigGroup.StrategySettings> strategies = replanningConfigGroup.getStrategySettings();
+
+            for(ReplanningConfigGroup.StrategySettings strategy : strategies){
+                if(Objects.equals("TimeAllocationMutator", strategy.getStrategyName())){ strategy.setWeight(param[0]); }
+                if(Objects.equals("ReRoute", strategy.getStrategyName())){ strategy.setWeight(param[2]); }
+                if(Objects.equals("SubtourModeChoice", strategy.getStrategyName())){ strategy.setWeight(param[3]); }
+            }
+
+            // Modify the other parameters and set Random Seed
+            globalConfigGroup.setRandomSeed(randomNumber);
+            timeAllocationMutatorConfigGroup.setMutationRange(param[1]);
+            subtourModeChoiceConfigGroup.setCoordDistance(param[4]);
+            subtourModeChoiceConfigGroup.setProbaForRandomSingleTripMode(param[5]);
+            replanningConfigGroup.setMaxAgentPlanMemorySize((int) param[6]);
+            replanningConfigGroup.setFractionOfIterationsToDisableInnovation(param[7]);
+            scoringConfigGroup.setBrainExpBeta(param[8]);
+
+
 
             // Set up the output directory
             String outputFolder = String.valueOf(iterations);
@@ -62,7 +100,7 @@ public class morris_method {
             config.controller().setOverwriteFileSetting(OutputDirectoryHierarchy.OverwriteFileSetting.deleteDirectoryIfExists);
 
             // Print some information for debugging
-            System.out.println("Starting simulation for parameters " + param[0] + ", " + param[1] + ", " + param[2]);
+            System.out.println("Starting Simulation...");
             System.out.println("Output directory : " + outputDirectory);
 
             Controler controler = new Controler(config);
