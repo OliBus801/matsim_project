@@ -13,12 +13,12 @@ import java.util.*;
 public class morris_method {
     public static final String baseOutputDirectory = "scenarios/siouxfalls-2014/outputs/Morris_Method/";
     static String baselineConfig = "scenarios/siouxfalls-2014/configs/config_default_baseline.xml";
-    static String parameterValuesCSV = "scenarios/siouxfalls-2014/configs/morris_method_sample.csv";
+    static String parameterValuesCSV = "scenarios/siouxfalls-2014/configs/complete_morris_method_sample.csv";
 
     public static void main(String[] args){
         String line;
         Random random = new Random();
-        int iterations = 21;
+        int iterations = 1;
         List<double[]> parameter_values = new ArrayList<>();
 
         // Read CSV file
