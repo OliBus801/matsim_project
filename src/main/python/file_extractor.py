@@ -46,7 +46,7 @@ def copy_files(src_dir, num_iterations, dest_dir, multiple_parameters):
                         # Copy scorestats.csv
                         score_stats_file = os.path.join(value_path, "scorestats.csv")
                         if os.path.exists(score_stats_file):
-                            shutil.copy(score_stats_file, os.path.join(dest_dir, f"{param_dir}/{value_dir}/traveldistancestats.csv"))
+                            shutil.copy(score_stats_file, os.path.join(dest_dir, f"{param_dir}/{value_dir}/scorestats.csv"))
                         else:
                             print(f"❗️ Could not find score stats file in {value_path}... Ignoring. ❗️")
 
@@ -92,7 +92,7 @@ def copy_files(src_dir, num_iterations, dest_dir, multiple_parameters):
                     # Copy scorestats.csv
                     score_stats_file = os.path.join(value_path, "scorestats.csv")
                     if os.path.exists(score_stats_file):
-                        shutil.copy(score_stats_file, os.path.join(dest_dir, f"{value_dir}/traveldistancestats.csv"))
+                        shutil.copy(score_stats_file, os.path.join(dest_dir, f"{value_dir}/scorestats.csv"))
                     else:
                         print(f"❗️ Could not find score stats file in {value_path}... Ignoring. ❗️")
 
