@@ -10,7 +10,7 @@ import java.util.*;
 public class Analysis {
 
     public static final String baseOutputDirectory = "scenarios/siouxfalls-2014/outputs/Preliminary_Analysis/";
-    public static final String maxAgentPlanOutputDirectory = baseOutputDirectory + "maxAgentPlan/";
+    public static final String fractionOfIterationsToDisableInnovationOutputDirectory = baseOutputDirectory + "fractionOfIterationsToDisableInnovation/";
     static String baselineConfig = "scenarios/siouxfalls-2014/configs/config_default_baseline.xml";
 
     public static List<List<Object>> experiments = new ArrayList<>();
@@ -20,17 +20,15 @@ public class Analysis {
         Random random = new Random();
 
         // Adding Experiments Parameters into a list
-        for (int i = 0; i < 7; i++) {
+        for (int i = 0; i < 11; i++) {
             // Generate four random (long) integers between 0 and 9999.
             long randomNumber1 = random.nextLong() % 9999L + 1;
             if (randomNumber1 < 0) { randomNumber1 += 9999L; }
 
-            int maxPlan = i * 5;
+            double fractionOfIteration = i * 0.1;
 
-            experiments.add(Arrays.asList(baselineConfig, randomNumber1, maxPlan, maxAgentPlanOutputDirectory  + maxPlan));
+            experiments.add(Arrays.asList(baselineConfig, randomNumber1, fractionOfIteration, fractionOfIterationsToDisableInnovationOutputDirectory  + fractionOfIteration));
         }
-
-        experiments.add(Arrays.asList(baselineConfig, 8844L, 5, maxAgentPlanOutputDirectory  + "Baseline_5"));
 
         // Shuffle the list
         Collections.shuffle(experiments);
@@ -50,7 +48,7 @@ public class Analysis {
 
             // Modify the config
             globalConfigGroup.setRandomSeed((Long) experiment.get(1));
-            replanningConfigGroup.setMaxAgentPlanMemorySize((Integer) experiment.get(2));
+            replanningConfigGroup.setFractionOfIterationsToDisableInnovation((Double) experiment.get(2));
             config.controller().setOutputDirectory((String) experiment.get(3));
 
             // Run the simulation
