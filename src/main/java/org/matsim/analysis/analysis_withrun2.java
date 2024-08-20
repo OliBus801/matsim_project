@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.util.*;
 
 
-public class analysis_withrun {
+public class analysis_withrun2 {
 
     public static final String baseOutputDirectory = "scenarios/siouxfalls-2014/outputs/Preliminary_Analysis/";
     public static final String fractionOfIterationsToDisableInnovationOutputDirectory = baseOutputDirectory + "fractionOfIterationsToDisableInnovation_RandomSampling/";
@@ -44,7 +44,7 @@ public class analysis_withrun {
         }
 
         // Adding Experiments Parameters into a list
-        for (int i = 0; i < 6; i++) {
+        for (int i = 6; i < 11; i++) {
             // Generate a random (long) integer between 0 and 9999.
             long randomNumber1 = random.nextLong() % 9999L + 1;
             if (randomNumber1 < 0) { randomNumber1 += 9999L; }
