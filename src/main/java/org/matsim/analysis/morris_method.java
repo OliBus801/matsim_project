@@ -11,7 +11,7 @@ import java.io.*;
 import java.util.*;
 
 public class morris_method {
-    public static final String baseOutputDirectory = "scenarios/siouxfalls-2014/outputs/Morris_Method/";
+    static String baseOutputDirectory = "scenarios/siouxfalls-2014/outputs/Morris_Method/";
     static String baselineConfig = "scenarios/siouxfalls-2014/configs/config_default_baseline.xml";
     static String parameterValuesCSV = "scenarios/siouxfalls-2014/samples/morris_method_part1.csv";
 
@@ -22,7 +22,10 @@ public class morris_method {
         List<double[]> parameter_values = new ArrayList<>();
 
         // Retrieve parameterValuesCSV from args
-        parameterValuesCSV = "scenarios/siouxfalls-2014/samples/" + args[0];
+        if (args.length > 0){
+            baseOutputDirectory = "scenarios/siouxfalls-2014/outputs/" + args[0];
+            parameterValuesCSV = "scenarios/siouxfalls-2014/samples/" + args[0] + ".csv";
+        }
 
         // Read CSV file
         System.out.println("Starting Morris Method...");

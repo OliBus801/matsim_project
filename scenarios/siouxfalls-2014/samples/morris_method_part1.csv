@@ -59,4 +59,3 @@ TimeAllocationMutator,mutationRange,ReRoute,ModeChoice,coordDistance,probaForRan
 0.4,14400.0,0.6,0.8,0.0,0.6,20.0,0.84,200.0
 0.4,14400.0,0.0,0.8,0.0,0.6,20.0,0.84,200.0
 0.4,14400.0,0.0,0.8,0.0,0.0,20.0,0.84,200.0
-
