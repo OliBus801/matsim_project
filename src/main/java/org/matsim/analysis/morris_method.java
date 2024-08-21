@@ -23,7 +23,7 @@ public class morris_method {
 
         // Retrieve parameterValuesCSV from args
         if (args.length > 0){
-            baseOutputDirectory = "scenarios/siouxfalls-2014/outputs/" + args[0];
+            baseOutputDirectory = "scenarios/siouxfalls-2014/outputs/" + args[0] + "/";
             parameterValuesCSV = "scenarios/siouxfalls-2014/samples/" + args[0] + ".csv";
         }
 
