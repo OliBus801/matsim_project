@@ -20,7 +20,7 @@
 	<properties>
 
 		<!-- Don't change version here, but in the parent section above! -->
-		<matsim.version>${parent.version}</matsim.version>
+		<matsim.version>${project.parent.version}</matsim.version>
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -153,11 +153,6 @@
 			<artifactId>application</artifactId>
 			<version>${matsim.version}</version>
 		</dependency>
-        <dependency>
-            <groupId>org.matsim</groupId>
-            <artifactId>matsim-example-project</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
         <!--		<dependency>-->
 <!--			<groupId>org.matsim.contrib</groupId>-->
 <!--			<artifactId>simwrapper</artifactId>-->
