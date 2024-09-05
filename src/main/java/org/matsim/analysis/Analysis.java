@@ -25,7 +25,7 @@ public class Analysis {
             long randomNumber1 = random.nextLong() % 9999L + 1;
             if (randomNumber1 < 0) { randomNumber1 += 9999L; }
 
-            double fractionOfIteration = i * 0.1;
+            double fractionOfIteration = i * 5;
 
             experiments.add(Arrays.asList(baselineConfig, randomNumber1, fractionOfIteration, fractionOfIterationsToDisableInnovationOutputDirectory  + fractionOfIteration));
         }

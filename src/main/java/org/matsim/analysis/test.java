@@ -5,16 +5,15 @@ import org.matsim.core.config.ConfigUtils;
 import org.matsim.core.controler.Controler;
 import org.matsim.core.scenario.ScenarioUtils;
 import org.matsim.core.gbl.MatsimRandom;
+import java.util.Random;
 
-import java.util.*;
 
 public class test {
 
-    static String brainExpConfig = "scenarios/siouxfalls-2014/configs/config_baseline_brainExp.xml";
-    static String pathLogitConfig = "scenarios/siouxfalls-2014/configs/config_baseline_pathSize.xml";
+    static String base_config = "scenarios/Québec/configs/config_base.xml";
 
     public static void main(String[] args){
-        System.out.println("Running Experiment for baseline of brainExp...");
+        System.out.println("Running a test of Québec City scenario...");
 
         // Reset Random Seed
         Random random = new Random();
@@ -23,9 +22,12 @@ public class test {
         MatsimRandom.reset(randomSeed);
 
         // Load the config file
-        Config config = ConfigUtils.loadConfig(brainExpConfig);
+        Config config = ConfigUtils.loadConfig(base_config);
         Scenario scenario = ScenarioUtils.loadScenario(config);
         Controler controler = new Controler(scenario);
+
+
+        // Run the scenario
         controler.run();
     }
 }
