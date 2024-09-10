@@ -9,8 +9,7 @@ import java.util.*;
 
 public class Analysis {
 
-    public static final String baseOutputDirectory = "scenarios/siouxfalls-2014/outputs/Preliminary_Analysis/";
-    public static final String fractionOfIterationsToDisableInnovationOutputDirectory = baseOutputDirectory + "fractionOfIterationsToDisableInnovation/";
+    public static final String baseOutputDirectory = "scenarios/siouxfalls-2014/outputs/RandomSeedAnalysis/";
     static String baselineConfig = "scenarios/siouxfalls-2014/configs/config_default_baseline.xml";
 
     public static List<List<Object>> experiments = new ArrayList<>();
@@ -20,14 +19,9 @@ public class Analysis {
         Random random = new Random();
 
         // Adding Experiments Parameters into a list
-        for (int i = 0; i < 11; i++) {
-            // Generate four random (long) integers between 0 and 9999.
-            long randomNumber1 = random.nextLong() % 9999L + 1;
-            if (randomNumber1 < 0) { randomNumber1 += 9999L; }
-
-            double fractionOfIteration = i * 5;
-
-            experiments.add(Arrays.asList(baselineConfig, randomNumber1, fractionOfIteration, fractionOfIterationsToDisableInnovationOutputDirectory  + fractionOfIteration));
+        for (int i = 0; i < 25; i++) {
+            experiments.add(Arrays.asList(baselineConfig, Math.abs(random.nextLong()), baseOutputDirectory + "RandomSeed/" + i));
+            experiments.add(Arrays.asList(baselineConfig, 60161L, baseOutputDirectory + "FixedSeed/" + i));
         }
 
         // Shuffle the list
@@ -35,7 +29,8 @@ public class Analysis {
 
         // Iterate through the list
         for(List<Object> experiment: experiments){
-            System.out.println("Running Experiment: " + experiment);
+            System.out.println("Running Experiment with Random Seed: " + experiment.get(1));
+            System.out.println("Output Directory: " + experiment.get(2));
             MatsimRandom.reset((Long) experiment.get(1));
 
 
@@ -43,13 +38,10 @@ public class Analysis {
             Config config = ConfigUtils.loadConfig((String) experiment.get(0));
             GlobalConfigGroup globalConfigGroup = ConfigUtils.addOrGetModule(config, GlobalConfigGroup.GROUP_NAME,
                     GlobalConfigGroup.class);
-            ReplanningConfigGroup replanningConfigGroup = ConfigUtils.addOrGetModule(config, ReplanningConfigGroup.GROUP_NAME,
-                    ReplanningConfigGroup.class);
 
             // Modify the config
             globalConfigGroup.setRandomSeed((Long) experiment.get(1));
-            replanningConfigGroup.setFractionOfIterationsToDisableInnovation((Double) experiment.get(2));
-            config.controller().setOutputDirectory((String) experiment.get(3));
+            config.controller().setOutputDirectory((String) experiment.get(2));
 
             // Run the simulation
             Controler controler = new Controler(config);
