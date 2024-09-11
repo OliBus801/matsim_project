@@ -65,7 +65,7 @@ case "`uname`" in
     fi
     ;;
 esac
-
+export JAVA_HOME=$EBROOTJAVA
 if [ -z "$JAVA_HOME" ] ; then
   if [ -r /etc/gentoo-release ] ; then
     JAVA_HOME=`java-config --jre-home`
