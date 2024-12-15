@@ -24,7 +24,8 @@ public class RunMatsimHP {
 
     // This Map stocks the values of the different hyperparameters 
     private static Map<String, String> thetaMap = new HashMap<>();
-    public static final String BASE_OUTPUT_DIRECTORY = "BO/cache";
+    private static String output_name;
+    public static final String BASE_OUTPUT_DIRECTORY = "BO/cache/";
 
     // Function that analyses the string theta as key-value pairs
     private static void parseTheta(String theta) {
@@ -54,15 +55,15 @@ public class RunMatsimHP {
         } else {
             // Stock arguments in thetaMap
             parseTheta(args[0]);
+            output_name = args[1];
             // I think this should stay hard-coded for now, but eventually we could extend this to provide flexibility - OB 2024
-            config = ConfigUtils.loadConfig("");
+            config = ConfigUtils.loadConfig("/home/olbus4/scratch/matsim_project/scenarios/siouxfalls-2014/configs/config_default_baseline.xml");
         }
 
         // Modify config here --------------------
         
         // Output Directory
-        config.controller().setOutputDirectory(BASE_OUTPUT_DIRECTORY);
-        // Important since we want to keep overwriting the same simulation run to save space (should we ?) - OB 2024
+        config.controller().setOutputDirectory(BASE_OUTPUT_DIRECTORY + output_name);
         config.controller().setOverwriteFileSetting(OverwriteFileSetting.deleteDirectoryIfExists);
 
         // Initialize the different configuration groups

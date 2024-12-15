@@ -15,7 +15,7 @@
 	</module>
 
 	<module name="controller">
-		<param name="outputDirectory" value="./outputs/3" />
+		<param name="outputDirectory" value="./scenarios/equil/outputs/test/" />
 		<param name="firstIteration" value="0" />
 		<param name="lastIteration" value="50" />
 	</module>

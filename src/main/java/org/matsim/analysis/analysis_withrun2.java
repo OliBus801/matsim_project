@@ -1,113 +1,88 @@
 package org.matsim.analysis;
+
 import org.matsim.core.config.Config;
 import org.matsim.core.config.ConfigUtils;
 import org.matsim.core.config.groups.*;
+import org.matsim.core.config.groups.ControllerConfigGroup.RoutingAlgorithmType;
 import org.matsim.core.controler.Controler;
 import org.matsim.core.controler.OutputDirectoryHierarchy;
 import org.matsim.core.gbl.MatsimRandom;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.*;
-
+import java.util.Random;
 
 public class analysis_withrun2 {
 
-    public static final String baseOutputDirectory = "scenarios/siouxfalls-2014/outputs/Preliminary_Analysis/";
-    public static final String fractionOfIterationsToDisableInnovationOutputDirectory = baseOutputDirectory + "fractionOfIterationsToDisableInnovation_RandomSampling/";
+    public static final String BASE_OUTPUT_DIRECTORY = "scenarios/siouxfalls-2014/outputs/ANOVA_Analysis/";
     static String baselineConfig = "scenarios/siouxfalls-2014/configs/config_default_baseline.xml";
-    static String parameterValuesCSV = "scenarios/siouxfalls-2014/configs/random_sample.csv";
 
-    public static void main(String[] args){
-        // Create a Random class
-        Random random = new Random();
-
-        // Read CSV file
-        System.out.println("Reading CSV file at " + parameterValuesCSV);
-        String line;
-        List<double[]> parameter_values = new ArrayList<>();
-
-        try (BufferedReader br = new BufferedReader(new FileReader(parameterValuesCSV))) {
-            br.readLine(); // Ignorer la première ligne (noms des paramètres)
-            while ((line = br.readLine()) != null) {
-                String[] values = line.split(",");
-                double[] param = new double[values.length];
-                for (int i = 0; i < values.length; i++) {
-                    param[i] = Double.parseDouble(values[i]);
-                }
-                parameter_values.add(param);
-            }
-            System.out.println("Finished reading CSV file at " + parameterValuesCSV + " !");
-        } catch (IOException e) {
-            e.printStackTrace();
+    public static void main(String[] args) {
+        // Validation des arguments
+        if (args.length < 2) {
+            System.out.println("Usage: java AnalysisWithRun <ParameterName> <ParameterValue>");
+            return;
         }
 
-        // Adding Experiments Parameters into a list
-        for (int i = 6; i < 11; i++) {
-            // Generate a random (long) integer between 0 and 9999.
-            long randomNumber1 = random.nextLong() % 9999L + 1;
-            if (randomNumber1 < 0) { randomNumber1 += 9999L; }
+        String parameterName = args[0];
+        String parameterValue = args[1];
 
-            double fractionOfIteration = i * 0.1;
+        // Création d'un objet Random
+        Random rand = new Random();
 
-            for (int j = 0; j < 5; j++){
-                double[] param = parameter_values.remove(parameter_values.size() - 1);
-                System.out.println("Setting up experiment with following parameters: ");
-                System.out.println("fractionOfIteration: " + fractionOfIteration);
-                System.out.println("TimeAllocationMutator: " + param[0]);
-                System.out.println("mutationRange: " + param[1]);
-                System.out.println("ReRoute: " + param[2]);
-                System.out.println("SubtourModeChoice: " + param[3]);
-                System.out.println("probaForRandomSingleTripMode: " + param[4]);
-                System.out.println("maxAgentPlanMemorySize: " + param[5]);
-                System.out.println("brainExpBeta: " + param[6]);
-                System.out.println("Running experiment...");
+        // Boucle sur les 20 simulations
+        for (int i = 1; i <= 20; i++) {
 
-                MatsimRandom.reset(randomNumber1);
+            // Charger la configuration de base
+            Config config = ConfigUtils.loadConfig(baselineConfig);
 
-                // Load the baseline config
-                Config config = ConfigUtils.loadConfig(baselineConfig);
+            // Configurer le répertoire de sortie
+            String iteration = String.valueOf(i);
+            String outputDirectory = BASE_OUTPUT_DIRECTORY + parameterName + "/" + parameterValue + "/" + iteration;
+            config.controller().setOutputDirectory(outputDirectory);
+            config.controller().setOverwriteFileSetting(OutputDirectoryHierarchy.OverwriteFileSetting.deleteDirectoryIfExists);
 
-                // Get the Config Groups Modules
-                GlobalConfigGroup globalConfigGroup = ConfigUtils.addOrGetModule(config,
-                        GlobalConfigGroup.GROUP_NAME, GlobalConfigGroup.class);
-                ScoringConfigGroup scoringConfigGroup = ConfigUtils.addOrGetModule(config,
-                        ScoringConfigGroup.GROUP_NAME, ScoringConfigGroup.class);
-                TimeAllocationMutatorConfigGroup timeAllocationMutatorConfigGroup = ConfigUtils.addOrGetModule(config,
-                        TimeAllocationMutatorConfigGroup.GROUP_NAME, TimeAllocationMutatorConfigGroup.class);
-                ReplanningConfigGroup replanningConfigGroup = ConfigUtils.addOrGetModule(config,
-                        ReplanningConfigGroup.GROUP_NAME, ReplanningConfigGroup.class);
-                SubtourModeChoiceConfigGroup subtourModeChoiceConfigGroup = ConfigUtils.addOrGetModule(config,
-                        SubtourModeChoiceConfigGroup.GROUP_NAME, SubtourModeChoiceConfigGroup.class);
+            // Obtenir les groupes de configuration
+            GlobalConfigGroup globalConfigGroup = ConfigUtils.addOrGetModule(config,
+                    GlobalConfigGroup.GROUP_NAME, GlobalConfigGroup.class);
+            TimeAllocationMutatorConfigGroup timeAllocationMutatorConfigGroup = ConfigUtils.addOrGetModule(config,
+                    TimeAllocationMutatorConfigGroup.GROUP_NAME, TimeAllocationMutatorConfigGroup.class);
+            ReplanningConfigGroup replanningConfigGroup = ConfigUtils.addOrGetModule(config,
+                    ReplanningConfigGroup.GROUP_NAME, ReplanningConfigGroup.class);
+            SubtourModeChoiceConfigGroup subtourModeChoiceConfigGroup = ConfigUtils.addOrGetModule(config,
+                    SubtourModeChoiceConfigGroup.GROUP_NAME, SubtourModeChoiceConfigGroup.class);
+            ControllerConfigGroup controllerConfigGroup = ConfigUtils.addOrGetModule(config, 
+                    ControllerConfigGroup.GROUP_NAME, ControllerConfigGroup.class);
 
-                // Get the replanning strategies and modify its weight
-                Collection<ReplanningConfigGroup.StrategySettings> strategies = replanningConfigGroup.getStrategySettings();
+            // Définir un nouveau RandomSeed
+            long randomSeed = Math.abs(rand.nextLong());
+            MatsimRandom.reset(randomSeed);
+            globalConfigGroup.setRandomSeed(randomSeed);
 
-                for(ReplanningConfigGroup.StrategySettings strategy : strategies){
-                    if(Objects.equals("TimeAllocationMutator", strategy.getStrategyName())){ strategy.setWeight(param[0]); }
-                    if(Objects.equals("ReRoute", strategy.getStrategyName())){ strategy.setWeight(param[2]); }
-                    if(Objects.equals("SubtourModeChoice", strategy.getStrategyName())){ strategy.setWeight(param[3]); }
-                }
-
-                // Modify the other parameters and set Random Seed
-                globalConfigGroup.setRandomSeed(randomNumber1);
-                timeAllocationMutatorConfigGroup.setMutationRange(param[1]);
-                subtourModeChoiceConfigGroup.setProbaForRandomSingleTripMode(param[4]);
-                replanningConfigGroup.setMaxAgentPlanMemorySize((int) param[5]);
-                replanningConfigGroup.setFractionOfIterationsToDisableInnovation(fractionOfIteration);
-                scoringConfigGroup.setBrainExpBeta(param[6]);
-
-                // Set up the output directory
-                String outputFolder = String.valueOf(j + 1);
-                String outputDirectory = fractionOfIterationsToDisableInnovationOutputDirectory + fractionOfIteration + "/" + outputFolder;
-                config.controller().setOutputDirectory(outputDirectory);
-                config.controller().setOverwriteFileSetting(OutputDirectoryHierarchy.OverwriteFileSetting.deleteDirectoryIfExists);
-
-                // Run the simulation
-                Controler controler = new Controler(config);
-                controler.run();
+            // Appliquer les modifications en fonction du paramètre choisi
+            switch (parameterName.toLowerCase()) {
+                case "affectingduration":
+                    timeAllocationMutatorConfigGroup.setAffectingDuration(Boolean.parseBoolean(parameterValue));
+                    break;
+                case "mutatearoundinitialendtimeonly":
+                    timeAllocationMutatorConfigGroup.setMutateAroundInitialEndTimeOnly(Boolean.parseBoolean(parameterValue));
+                    break;
+                case "routingalgorithmtype":
+                    controllerConfigGroup.setRoutingAlgorithmType(RoutingAlgorithmType.valueOf(parameterValue));
+                    break;
+                case "modes":
+                    String[] modes = parameterValue.split(",");
+                    subtourModeChoiceConfigGroup.setModes(modes);
+                    break;
+                case "planselectorforremoval":
+                    replanningConfigGroup.setPlanSelectorForRemoval(parameterValue);
+                    break;
+                default:
+                    System.out.println("Paramètre non reconnu : " + parameterName);
+                    return;
             }
+
+            // Lancer la simulation
+            Controler controler = new Controler(config);
+            controler.run();
         }
     }
 }

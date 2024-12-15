@@ -4,7 +4,7 @@
 <config>
 
 	  <module name="global">
-		  <param name="numberOfThreads" value="1"/>
+		  <param name="numberOfThreads" value="4"/>
 	  </module>
 
     <module name="network">
@@ -35,7 +35,7 @@
         <param name="endTime" value="30:00:00" />
         <param name="flowCapacityFactor" value="1.00" />
         <param name="storageCapacityFactor" value="1.00" />
-        <param name="numberOfThreads" value="1" />
+        <param name="numberOfThreads" value="4" />
         <param name = "snapshotperiod"	value = "00:00:01"/>
 
         <!-- Boolean. `true': stuck vehicles are removed, aborting the plan; `false': stuck vehicles are forced into the next link. `false' is probably the better choice. -->
@@ -202,7 +202,7 @@
     <!--  Size of the events Queue. Increase for very large scenarios  -->
     <param name="eventsQueueSize" value="131072"/>
     <!--  Number of threads for parallel events handler. _null_ means the framework decides by itself. 0 is currently not possible.  -->
-    <param name="numberOfThreads" value="1"/>
+    <param name="numberOfThreads" value="4"/>
     <!--  If enabled, each event handler is assigned to its own thread. Note that enabling this feature disabled the numberOfThreads option! This feature is still experimental!  -->
     <param name="oneThreadPerHandler" value="false"/>
     <!--  If enabled, it is ensured that all events that are created during a time step of the mobility simulation are processed before the next time step is simulated. E.g. neccessary when within-day replanning is used.  -->

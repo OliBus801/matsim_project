@@ -64,6 +64,13 @@ def copy_files(src_dir, num_iterations, dest_dir, multiple_parameters):
                         else:
                             print(f"❗️ Could not find output config file in {value_path}... Ignoring. ❗️")
 
+                        # Copy stopwatch.csv
+                        output_config_file = os.path.join(value_path, "stopwatch.csv")
+                        if os.path.exists(output_config_file):
+                            shutil.copy(output_config_file, os.path.join(dest_dir, f"{param_dir}/{value_dir}/stopwatch.csv"))
+                        else:
+                            print(f"❗️ Could not find stopwatch file in {value_path}... Ignoring. ❗️")    
+
     else:
         for value_dir in os.listdir(src_dir):
             value_path = os.path.join(src_dir, value_dir)
@@ -117,6 +124,13 @@ def copy_files(src_dir, num_iterations, dest_dir, multiple_parameters):
                         shutil.copy(output_config_file, os.path.join(dest_dir, f"{value_dir}/output_config.xml"))
                     else:
                         print(f"❗️ Could not find output config file in {value_path}... Ignoring. ❗️")
+
+                    # Copy stopwatch.csv
+                    output_config_file = os.path.join(value_path, "stopwatch.csv")
+                    if os.path.exists(output_config_file):
+                        shutil.copy(output_config_file, os.path.join(dest_dir, f"{value_dir}/stopwatch.csv"))
+                    else:
+                        print(f"❗️ Could not find stopwatch file in {value_path}... Ignoring. ❗️")                   
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Extract and copy specific files from a directory structure.")

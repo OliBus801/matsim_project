@@ -5,29 +5,38 @@ import org.matsim.core.config.ConfigUtils;
 import org.matsim.core.controler.Controler;
 import org.matsim.core.scenario.ScenarioUtils;
 import org.matsim.core.gbl.MatsimRandom;
+import org.matsim.core.controler.OutputDirectoryHierarchy;
 import java.util.Random;
+import java.time.Duration;
+import java.time.Instant;
 
 
 public class test {
 
-    static String base_config = "scenarios/Québec/configs/config_base.xml";
+    static String base_config = "scenarios/siouxfalls-2014/configs/config_default_baseline.xml";
+    static String BASE_OUTPUT_DIRECTORY = "scenarios/siouxfalls-2014/outputs/Time_Analysis/";
 
     public static void main(String[] args){
-        System.out.println("Running a test of Québec City scenario...");
+        System.out.println("Running a test Sioux Falls scenario for time benchmark...");
 
-        // Reset Random Seed
-        Random random = new Random();
-        long randomSeed = random.nextLong() % 9999L + 1;
-        if (randomSeed < 0) { randomSeed += 9999L; }
-        MatsimRandom.reset(randomSeed);
+        for(int i = 1; i <= 5; i++){
+            // Reset Random Seed
+            Random rand = new Random();
+            MatsimRandom.reset(Math.abs(rand.nextLong()));
 
-        // Load the config file
-        Config config = ConfigUtils.loadConfig(base_config);
-        Scenario scenario = ScenarioUtils.loadScenario(config);
-        Controler controler = new Controler(scenario);
+            // Load the config file
+            Config config = ConfigUtils.loadConfig(base_config);
 
+            // Configurer le répertoire de sortie
+            String iteration = String.valueOf(i);
+            String outputDirectory = BASE_OUTPUT_DIRECTORY + iteration;
+            config.controller().setOutputDirectory(outputDirectory);
+            config.controller().setOverwriteFileSetting(OutputDirectoryHierarchy.OverwriteFileSetting.deleteDirectoryIfExists);
+            Scenario scenario = ScenarioUtils.loadScenario(config);
+            Controler controler = new Controler(scenario);
 
-        // Run the scenario
-        controler.run();
+            // Run the scenario
+            controler.run();
+        }
     }
 }
