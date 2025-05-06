@@ -29,3 +29,10 @@ hs_err_pid*
 scenarios/siouxfalls-2014/outputs/
 scenarios/equil/outputs
 scenarios/equil/output
+
+# Docker
+Dockerfile
+docker-compose.yml
+
+# Maven
+dependency-reduced-pom.xml
