@@ -35,3 +35,6 @@ scenarios/equil/output
 
 # Maven
 dependency-reduced-pom.xml
+
+# Kyoto Scenario
+scenarios/kyoto/*   
