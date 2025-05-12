@@ -68,7 +68,7 @@ public class RunMatsimHP {
                 config = ConfigUtils.loadConfig(BASE_CONFIG);
             }
             if (args.length > 3 && args[3] != null && !args[3].isEmpty()) {
-                config.controller().setOutputDirectory(args[3] + "simulation_" + simulation_number);
+                config.controller().setOutputDirectory(args[3] + "/simulation_" + simulation_number);
             } else {
                 config.controller().setOutputDirectory(BASE_OUTPUT_DIRECTORY + "simulation_" + simulation_number);
             }
@@ -76,8 +76,6 @@ public class RunMatsimHP {
 
         // We modify the config here -----------------
         
-        // Output Directory
-        config.controller().setOutputDirectory(BASE_OUTPUT_DIRECTORY + "simulation_" + simulation_number);
         // Important since we want to keep overwriting the same simulation run to save space (should we ?) - OB 2024
         config.controller().setOverwriteFileSetting(OverwriteFileSetting.deleteDirectoryIfExists);
 
@@ -173,7 +171,7 @@ public class RunMatsimHP {
         // numberOfIterations
         config.controller().setLastIteration(Integer.parseInt(getThetaParam("numberOfIterations")));
         // scalingFactor
-        countsConfigGroup.setCountsScaleFactor(Double.parseDouble(getThetaParam("scalingFactor"))); // 10 for 10% of the population
+        // countsConfigGroup.setCountsScaleFactor(Double.parseDouble(getThetaParam("scalingFactor"))); // 10 for 10% of the population
         
 
         // mutationRange
