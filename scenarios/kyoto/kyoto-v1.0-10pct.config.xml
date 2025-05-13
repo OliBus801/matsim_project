@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE config SYSTEM "http://www.matsim.org/files/dtd/config_v2.dtd">
+<!DOCTYPE config SYSTEM "./dtd/config_v2.dtd">
 <config>
 	<module name="timeAllocationMutator">
 		<param name="mutationRange" value="1800.0"/>
 		<param name="mutateAroundInitialEndTimeOnly" value="true"/>
 	</module>
 	<module name="controller">
-		<param name="lastIteration" value="200"/>
+		<param name="lastIteration" value="100"/>
 		<param name="overwriteFiles" value="failIfDirectoryExists"/>
 		<param name="runId" value="kyoto-v1.9"/>
-		<param name="outputDirectory" value="./outputs/kyoto-v1.0-10pct-TEST"/>
-		<param name="writeEventsInterval" value="100"/>
-		<param name="writePlansInterval" value="100"/>
+		<param name="outputDirectory" value="/home/o/olbus4/links/scratch/Sensitivity_Analysis/kyoto/kyoto-v1.0-10pct-TEST"/>
+		<param name="writeEventsInterval" value="50"/>
+		<param name="writePlansInterval" value="50"/>
 		<param name="routingAlgorithmType" value="SpeedyALT"/>
 	</module>
 	<module name="global">
 		<param name="coordinateSystem" value="EPSG:32653"/>
 		<param name="insistingOnDeprecatedConfigVersion" value="false"/>
-		<param name="numberOfThreads" value="16"/>
+		<param name="numberOfThreads" value="64"/>
 	</module>
 	<module name="network">
 		<param name="inputNetworkFile" value="./kyoto-v1.0-network-with-pt.xml.gz"/>
 	</module>
 	<module name="plans">
-		<param name="inputPlansFile" value="./kyoto-v1.0-10pct.plans-initial.xml.gz"/>
+		<param name="inputPlansFile" value="./kyoto-v.1.1-10pct.plans-initial.xml.gz"/>
 		<param name="removingUnnecessaryPlanAttributes" value="true"/>
 	</module>
 	<module name="vehicles">
@@ -57,7 +57,7 @@
 		<param name="mainMode" value="car,truck,freight"/>
 		<param name="flowCapacityFactor" value="0.1"/>
 		<param name="storageCapacityFactor" value="0.1"/>
-		<param name="numberOfThreads" value="12"/>
+		<param name="numberOfThreads" value="64"/>
 		<param name="startTime" value="00:00:00"/>
 		<param name="endTime" value="24:00:00"/> <!-- Modified to 24h simulation -ob -->
 		<param name="stuckTime" value="30.0"/>
@@ -82,6 +82,7 @@
 	</module>
 	-->
 
+	<!--
 	<module name="simwrapper" >
 		<parameterset type="params" >
 			<param name="context" value="" />
@@ -91,6 +92,7 @@
 			<param name="shp" value="../area.gpkg" />
 		</parameterset>
 	</module>
+	-->
 
 	<module name="transitRouter">
 		<param name="directWalkFactor" value="1.0"/>
@@ -181,6 +183,33 @@
 				<param name="monetaryDistanceRate" value="-4.0E-4" />
 				<param name="mode" value="truck" />
 			</parameterset>
+
+			<!--TEST ACTIVITY PARAMS-->
+			<parameterset type="activityParams">
+                <param name="activityType"    value="home" /> <!-- home -->
+                <param name="priority"        value="1" />
+                <param name="typicalDuration" value="13:00:00" />
+                <param name="minimalDuration" value="01:00:00" />
+            </parameterset>
+            <parameterset type="activityParams">
+                <param name="activityType"            value="work" />
+                <param name="priority"        value="1" />
+                <param name="typicalDuration" value="09:00:00" />
+                <param name="minimalDuration" value="08:00:00" />
+                <param name="openingTime"     value="08:00:00" />
+                <param name="earliestEndTime" value="17:00:00" />
+                <param name="latestStartTime" value="09:00:00" />
+                <param name="closingTime"     value="18:00:00" />
+            </parameterset>
+
+            <parameterset type="activityParams">
+                <param name="activityType"            value="leisure" />
+                <param name="priority"        value="1" />
+                <param name="typicalDuration" value="01:00:00" />
+                <param name="minimalDuration" value="00:30:00" />
+                <param name="openingTime"     value="08:00:00" />
+                <param name="closingTime"     value="20:00:00" />
+            </parameterset>
 		</parameterset>
 	</module>
 
