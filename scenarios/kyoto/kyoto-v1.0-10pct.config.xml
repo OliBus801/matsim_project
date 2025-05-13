@@ -183,33 +183,6 @@
 				<param name="monetaryDistanceRate" value="-4.0E-4" />
 				<param name="mode" value="truck" />
 			</parameterset>
-
-			<!--TEST ACTIVITY PARAMS-->
-			<parameterset type="activityParams">
-                <param name="activityType"    value="home" /> <!-- home -->
-                <param name="priority"        value="1" />
-                <param name="typicalDuration" value="13:00:00" />
-                <param name="minimalDuration" value="01:00:00" />
-            </parameterset>
-            <parameterset type="activityParams">
-                <param name="activityType"            value="work" />
-                <param name="priority"        value="1" />
-                <param name="typicalDuration" value="09:00:00" />
-                <param name="minimalDuration" value="08:00:00" />
-                <param name="openingTime"     value="08:00:00" />
-                <param name="earliestEndTime" value="17:00:00" />
-                <param name="latestStartTime" value="09:00:00" />
-                <param name="closingTime"     value="18:00:00" />
-            </parameterset>
-
-            <parameterset type="activityParams">
-                <param name="activityType"            value="leisure" />
-                <param name="priority"        value="1" />
-                <param name="typicalDuration" value="01:00:00" />
-                <param name="minimalDuration" value="00:30:00" />
-                <param name="openingTime"     value="08:00:00" />
-                <param name="closingTime"     value="20:00:00" />
-            </parameterset>
 		</parameterset>
 	</module>
 
