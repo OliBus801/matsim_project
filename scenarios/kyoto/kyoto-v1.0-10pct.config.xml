@@ -23,7 +23,7 @@
 		<param name="inputNetworkFile" value="./kyoto-v1.0-network-with-pt.xml.gz"/>
 	</module>
 	<module name="plans">
-		<param name="inputPlansFile" value="./kyoto-v.1.1-10pct.plans-initial.xml.gz"/>
+		<param name="inputPlansFile" value="./kyoto-v1.0-10pct.plans-initial.xml.gz"/>
 		<param name="removingUnnecessaryPlanAttributes" value="true"/>
 	</module>
 	<module name="vehicles">
