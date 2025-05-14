@@ -79,7 +79,7 @@ public final class KyotoScenarioHP extends OpenKyotoScenario {
             String v = theta.get("ASC_" + mode);
             if (v != null)
                 sc.getOrCreateModeParams(mode)
-                  .setMarginalUtilityOfTraveling(Double.parseDouble(v));
+                  .setConstant(Double.parseDouble(v));
         });
 
         /* --------- replanning --------- */

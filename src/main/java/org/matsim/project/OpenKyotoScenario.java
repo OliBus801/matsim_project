@@ -64,38 +64,35 @@ public class OpenKyotoScenario extends MATSimApplication {
 		Activities.addScoringParams(config, true);
 
 		// Required for all calibration strategies
-		/*
 		for (String subpopulation : List.of("person")) {
 			config.replanning().addStrategySettings(
 				new ReplanningConfigGroup.StrategySettings()
 					.setStrategyName(DefaultPlanStrategiesModule.DefaultSelector.ChangeExpBeta)
-					.setWeight(1.0)
+					.setWeight(0.7)
 					.setSubpopulation(subpopulation)
 			);
 
 			config.replanning().addStrategySettings(
 				new ReplanningConfigGroup.StrategySettings()
 					.setStrategyName(DefaultPlanStrategiesModule.DefaultStrategy.ReRoute)
-					.setWeight(0.15)
+					.setWeight(0.1)
 					.setSubpopulation(subpopulation)
 			);
 
 			config.replanning().addStrategySettings(
 				new ReplanningConfigGroup.StrategySettings()
 				.setStrategyName(DefaultPlanStrategiesModule.DefaultStrategy.TimeAllocationMutator_ReRoute)
-				.setWeight(0.15)
+				.setWeight(0.1)
 				.setSubpopulation(subpopulation)
 			);
-		}
-		*/
 
-// TODO: modechoice is not calibrated yet
-//		config.replanning().addStrategySettings(
-//			new ReplanningConfigGroup.StrategySettings()
-//				.setStrategyName(DefaultPlanStrategiesModule.DefaultStrategy.SubtourModeChoice)
-//				.setWeight(0.15)
-//				.setSubpopulation("person")
-//		);
+			config.replanning().addStrategySettings(
+			new ReplanningConfigGroup.StrategySettings()
+				.setStrategyName(DefaultPlanStrategiesModule.DefaultStrategy.SubtourModeChoice)
+				.setWeight(0.1)
+				.setSubpopulation(subpopulation)
+		);
+		}
 
 		return config;
 	}
