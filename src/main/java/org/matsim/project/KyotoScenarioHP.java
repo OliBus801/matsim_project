@@ -111,6 +111,11 @@ public final class KyotoScenarioHP extends OpenKyotoScenario {
         return map;
     }
 
+    // Function to retrieve the value of a parameter from its name
+    public static String getThetaParam(String paramName) {
+        return thetaMap.get(paramName);
+    }
+
     /* -------------------- main -------------------- */
     public static void main(String[] args) {
         MATSimApplication.run(KyotoScenarioHP.class, args);
