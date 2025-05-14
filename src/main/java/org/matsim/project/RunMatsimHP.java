@@ -9,7 +9,6 @@ import org.matsim.core.config.groups.GlobalConfigGroup;
 import org.matsim.core.config.groups.QSimConfigGroup;
 import org.matsim.core.config.groups.ReplanningConfigGroup;
 import org.matsim.core.config.groups.ScoringConfigGroup;
-import org.matsim.core.config.groups.SubtourModeChoiceConfigGroup;
 import org.matsim.core.config.groups.TimeAllocationMutatorConfigGroup;
 import org.matsim.core.controler.Controler;
 import org.matsim.core.controler.OutputDirectoryHierarchy.OverwriteFileSetting;
@@ -115,14 +114,15 @@ public class RunMatsimHP {
         scoringConfigGroup.setEarlyDeparture_utils_hr(Double.parseDouble(getThetaParam("earlyDeparture_util")));
         scoringConfigGroup.setLateArrival_utils_hr(Double.parseDouble(getThetaParam("lateArrival_util")));
         scoringConfigGroup.setPerforming_utils_hr(Double.parseDouble(getThetaParam("performing_util")));
-        scoringConfigGroup.setMarginalUtlOfWaiting_utils_hr(Double.parseDouble(getThetaParam("waiting_util")));
+        scoringConfigGroup.setMarginalUtlOfWaitingPt_utils_hr(Double.parseDouble(getThetaParam("waitingPt_util")));
+        scoringConfigGroup.setMarginalUtilityOfMoney(Double.parseDouble(getThetaParam("money_util")));
         
         // Set Individualized utility parameters for each mode and print the mode name
         scoringConfigGroup.getAllModes()
             .forEach(mode -> {
-            String utilityStr = getThetaParam("traveling_util_" + mode);
+            String utilityStr = getThetaParam("ASC_" + mode);
             if (utilityStr != null) {
-                scoringConfigGroup.getOrCreateModeParams(mode).setMarginalUtilityOfTraveling(Double.parseDouble(getThetaParam("traveling_util_" + mode)));
+                scoringConfigGroup.getOrCreateModeParams(mode).setConstant(Double.parseDouble(utilityStr));
             }
         });
 
@@ -134,31 +134,6 @@ public class RunMatsimHP {
                 strategy.setWeight(Double.parseDouble(weightStr));
             }
         });
-
-
-        /*
-        Collection<ReplanningConfigGroup.StrategySettings> strategies = replanningConfigGroup.getStrategySettings();
-        
-        for (ReplanningConfigGroup.StrategySettings strategy : strategies) {
-            switch (strategy.getStrategyName()) {
-                case "timeAllocationMutator":
-                    strategy.setWeight(Double.parseDouble(getThetaParam("timeAllocationMutator")));
-                    break;
-                case "ReRoute":
-                strategy.setWeight(Double.parseDouble(getThetaParam("ReRoute")));
-                    break;
-                case "ChangeExpBeta":
-                    strategy.setWeight(Double.parseDouble(getThetaParam("ChangeExpBeta")));
-                    break;
-                case "subtourModeChoice":
-                    strategy.setWeight(Double.parseDouble(getThetaParam("subtourModeChoice")));
-                    break;
-                default:
-                    // Optional: Handle unknown strategy names if necessary
-                    break;
-            }
-        }
-         */
             
 
         // maxAgentPlanMemorySize
@@ -170,12 +145,9 @@ public class RunMatsimHP {
         // ----------- Global parameters -----------
         // numberOfIterations
         config.controller().setLastIteration(Integer.parseInt(getThetaParam("numberOfIterations")));
-        // scalingFactor
-        // countsConfigGroup.setCountsScaleFactor(Double.parseDouble(getThetaParam("scalingFactor"))); // 10 for 10% of the population
-        
 
         // mutationRange
-        //timeAllocationMutatorConfigGroup.setMutationRange(Double.parseDouble(getThetaParam("mutationRange")));
+        timeAllocationMutatorConfigGroup.setMutationRange(Double.parseDouble(getThetaParam("mutationRange")));
 
         // brainExpBeta
         // scoringConfigGroup.setBrainExpBeta(Double.parseDouble(getThetaParam("brainExpBeta")));
