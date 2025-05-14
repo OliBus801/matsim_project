@@ -91,7 +91,7 @@ public final class KyotoScenarioHP extends OpenKyotoScenario {
         repl.setMaxAgentPlanMemorySize(Integer.parseInt(theta.get("maxAgentPlanMemorySize")));
         
         TimeAllocationMutatorConfigGroup timeAlloc = config.timeAllocationMutator();
-        timeAlloc.setMutationRange(Double.parseDouble(getThetaParam("mutationRange")));
+        timeAlloc.setMutationRange(Double.parseDouble(theta.get("mutationRange")));
 
 
         /* --------- QSim --------- */
@@ -109,11 +109,6 @@ public final class KyotoScenarioHP extends OpenKyotoScenario {
             else System.err.println("Mauvais format : " + kv);
         }
         return map;
-    }
-
-    // Function to retrieve the value of a parameter from its name
-    public static String getThetaParam(String paramName) {
-        return thetaMap.get(paramName);
     }
 
     /* -------------------- main -------------------- */

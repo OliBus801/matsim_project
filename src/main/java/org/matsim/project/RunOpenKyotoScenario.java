@@ -1,4 +1,4 @@
-package org.matsim.run;
+package org.matsim.project;
 
 
 import org.matsim.application.MATSimApplication;
