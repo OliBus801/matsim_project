@@ -61,7 +61,7 @@
 		<param name="startTime" value="00:00:00"/>
 		<param name="endTime" value="24:00:00"/> <!-- Modified to 24h simulation -ob -->
 		<param name="stuckTime" value="30.0"/>
-		<param name="trafficDynamics" value="queue"/> <!-- Modified to FIFO according to warning -ob -->
+		<param name="trafficDynamics" value="kinematicWaves"/> <!-- Modified to FIFO according to warning -ob -->
 		<param name="vehiclesSource" value="modeVehicleTypesFromVehiclesData"/>
 		<param name="insertingWaitingVehiclesBeforeDrivingVehicles" value="true"/>
 		<param name="usePersonIdForMissingVehicleId" value="false"/>
