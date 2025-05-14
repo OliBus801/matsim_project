@@ -17,7 +17,7 @@
 	<module name="global">
 		<param name="coordinateSystem" value="EPSG:32653"/>
 		<param name="insistingOnDeprecatedConfigVersion" value="false"/>
-		<param name="numberOfThreads" value="4"/>
+		<param name="numberOfThreads" value="16"/>
 	</module>
 	<module name="network">
 		<param name="inputNetworkFile" value="./kyoto-v1.0-network-with-pt.xml.gz"/>
@@ -57,7 +57,7 @@
 		<param name="mainMode" value="car,truck,freight"/>
 		<param name="flowCapacityFactor" value="0.1"/>
 		<param name="storageCapacityFactor" value="0.1"/>
-		<param name="numberOfThreads" value="4"/>
+		<param name="numberOfThreads" value="16"/>
 		<param name="startTime" value="00:00:00"/>
 		<param name="endTime" value="24:00:00"/> <!-- Modified to 24h simulation -ob -->
 		<param name="stuckTime" value="30.0"/>
