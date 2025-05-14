@@ -64,7 +64,7 @@ public final class KyotoScenarioHP extends OpenKyotoScenario {
         ctrl.setLastIteration(lastIt);
         ctrl.setWriteEventsInterval(lastIt);
         ctrl.setWritePlansInterval(lastIt);
-        ctrl.setOutputDirectory(configPath + simId);
+        ctrl.setOutputDirectory(outputPath + simId);
         ctrl.setOverwriteFileSetting(OutputDirectoryHierarchy.OverwriteFileSetting.deleteDirectoryIfExists);
 
         /* --------- scoring --------- */
