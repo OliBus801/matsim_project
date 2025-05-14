@@ -38,3 +38,6 @@ dependency-reduced-pom.xml
 
 # Kyoto Scenario
 scenarios/kyoto/*   
+
+# Berlin Scenario
+scenarios/berlin/*   
