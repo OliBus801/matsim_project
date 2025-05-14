@@ -64,7 +64,7 @@ public final class KyotoScenarioHP extends OpenKyotoScenario {
         ctrl.setLastIteration(lastIt);
         ctrl.setWriteEventsInterval(lastIt);
         ctrl.setWritePlansInterval(lastIt);
-        ctrl.setOutputDirectory(outputPath + simId);
+        ctrl.setOutputDirectory(outputPath + "/simulation_" + simId);
         ctrl.setOverwriteFileSetting(OutputDirectoryHierarchy.OverwriteFileSetting.deleteDirectoryIfExists);
 
         /* --------- scoring --------- */
@@ -72,10 +72,11 @@ public final class KyotoScenarioHP extends OpenKyotoScenario {
         sc.setEarlyDeparture_utils_hr(   Double.parseDouble(theta.get("earlyDeparture_util")));
         sc.setLateArrival_utils_hr(      Double.parseDouble(theta.get("lateArrival_util")));
         sc.setPerforming_utils_hr(       Double.parseDouble(theta.get("performing_util")));
-        sc.setMarginalUtlOfWaiting_utils_hr(Double.parseDouble(theta.get("waiting_util")));
+        sc.setMarginalUtlOfWaitingPt_utils_hr(Double.parseDouble(theta.get("waitingPt_util")));
+        sc.setMarginalUtilityOfMoney(    Double.parseDouble(theta.get("money_util")));
 
         sc.getAllModes().forEach(mode -> {
-            String v = theta.get("traveling_util_" + mode);
+            String v = theta.get("ASC_" + mode);
             if (v != null)
                 sc.getOrCreateModeParams(mode)
                   .setMarginalUtilityOfTraveling(Double.parseDouble(v));
@@ -88,6 +89,10 @@ public final class KyotoScenarioHP extends OpenKyotoScenario {
             if (w != null) s.setWeight(Double.parseDouble(w));
         });
         repl.setMaxAgentPlanMemorySize(Integer.parseInt(theta.get("maxAgentPlanMemorySize")));
+        
+        TimeAllocationMutatorConfigGroup timeAlloc = config.timeAllocationMutator();
+        timeAlloc.setMutationRange(Double.parseDouble(getThetaParam("mutationRange")));
+
 
         /* --------- QSim --------- */
         config.qsim().setTimeStepSize(Double.parseDouble(theta.get("timeStepSize")));
