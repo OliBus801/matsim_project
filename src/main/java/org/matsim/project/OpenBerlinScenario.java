@@ -1,7 +1,5 @@
 package org.matsim.project;
 
-import com.google.inject.Key;
-import com.google.inject.name.Names;
 import org.matsim.analysis.personMoney.PersonMoneyEventsAnalysisModule;
 import org.matsim.api.core.v01.TransportMode;
 import org.matsim.application.MATSimApplication;
@@ -18,8 +16,6 @@ import org.matsim.core.controler.AbstractModule;
 import org.matsim.core.controler.Controler;
 import org.matsim.core.replanning.strategies.DefaultPlanStrategiesModule;
 import org.matsim.core.router.costcalculators.OnlyTimeDependentTravelDisutilityFactory;
-import org.matsim.core.router.costcalculators.TravelDisutilityFactory;
-import org.matsim.core.router.util.TravelTime;
 import org.matsim.simwrapper.SimWrapperConfigGroup;
 import org.matsim.simwrapper.SimWrapperModule;
 import picocli.CommandLine;
@@ -29,7 +25,7 @@ import java.util.List;
 @CommandLine.Command(header = ":: Open Berlin Scenario ::", version = OpenBerlinScenario.VERSION, mixinStandardHelpOptions = true, showDefaultValues = true)
 public class OpenBerlinScenario extends MATSimApplication {
 
-	public static final String VERSION = "6.4";
+	public static final String VERSION = "6.0";
 	public static final String CRS = "EPSG:25832";
 
 	@CommandLine.Mixin
@@ -41,7 +37,7 @@ public class OpenBerlinScenario extends MATSimApplication {
 	private String planSelector;
 
 	public OpenBerlinScenario() {
-		super(String.format("input/v%s/berlin-v%s.config.xml", VERSION, VERSION));
+		super(String.format("scenarios/berlin/berlin-v%s.config.xml", VERSION, VERSION));
 	}
 
 	public static void main(String[] args) {
@@ -103,10 +99,8 @@ public class OpenBerlinScenario extends MATSimApplication {
 				.setSubpopulation("person")
 		);
 
-		// Need to switch to warning for best score
-		if (planSelector.equals(DefaultPlanStrategiesModule.DefaultSelector.BestScore)) {
-			config.vspExperimental().setVspDefaultsCheckingLevel(VspExperimentalConfigGroup.VspDefaultsCheckingLevel.warn);
-		}
+		// Switch off VSP checking abort
+		config.vspExperimental().setVspDefaultsCheckingLevel(VspExperimentalConfigGroup.VspDefaultsCheckingLevel.warn);
 
 		// Bicycle config must be present
 		ConfigUtils.addOrGetModule(config, BicycleConfigGroup.class);
@@ -132,6 +126,7 @@ public class OpenBerlinScenario extends MATSimApplication {
 		private final boolean carOnly;
 
 		public TravelTimeBinding() {
+
 			this.carOnly = false;
 		}
 
@@ -145,8 +140,8 @@ public class OpenBerlinScenario extends MATSimApplication {
 			addTravelDisutilityFactoryBinding(TransportMode.ride).to(carTravelDisutilityFactoryKey());
 
 			if (!carOnly) {
-				addTravelTimeBinding("freight").to(Key.get(TravelTime.class, Names.named(TransportMode.truck)));
-				addTravelDisutilityFactoryBinding("freight").to(Key.get(TravelDisutilityFactory.class, Names.named(TransportMode.truck)));
+				addTravelTimeBinding("freight").to(networkTravelTime());
+				addTravelDisutilityFactoryBinding("freight").to(carTravelDisutilityFactoryKey());
 
 
 				bind(BicycleLinkSpeedCalculator.class).to(BicycleLinkSpeedCalculatorDefaultImpl.class);

@@ -40,4 +40,5 @@ dependency-reduced-pom.xml
 scenarios/kyoto/*   
 
 # Berlin Scenario
-scenarios/berlin/*   
+scenarios/berlin/*
+!scenarios/berlin/berlin-v6.0.config.xml
