@@ -103,7 +103,7 @@
 		<param name="separateModes" value="true"/>
 	</module>
 	<module name="vspExperimental">
-		<param name="vspDefaultsCheckingLevel" value="abort"/>
+		<param name="vspDefaultsCheckingLevel" value="warn"/>
 	</module>
 
 	<module name="scoring">
@@ -215,26 +215,44 @@
 		<param name="maxAgentPlanMemorySize" value="5" /> <!-- 0 means unlimited -->
 		<param name="fractionOfIterationsToDisableInnovation" value="0.9"/>
 		
-		
 		<parameterset type="strategysettings">
-            <param name="strategyName" value="ChangeExpBeta"/>
-            <param name="weight" value="0.7"/>
-        </parameterset>
+			<param name="strategyName" value="ChangeExpBeta"/>
+			<param name="weight" value="0.7"/>
+		</parameterset>
+		<parameterset type="strategysettings">
+			<param name="strategyName" value="ReRoute"/>
+			<param name="weight" value="0.1"/>
+		</parameterset>
+		<parameterset type="strategysettings">
+			<param name="strategyName" value="SubtourModeChoice"/>
+			<param name="weight" value="0.1"/>
+		</parameterset>
+		<parameterset type="strategysettings">
+			<param name="strategyName" value="TimeAllocationMutator"/>
+			<param name="weight" value="0.1"/>
+		</parameterset>
 
-        <parameterset type="strategysettings">
-            <param name="strategyName" value="ReRoute"/>
-            <param name="weight" value="0.1"/>
-        </parameterset>
-
-        <parameterset type="strategysettings">
-            <param name="strategyName" value="SubtourModeChoice"/>
-            <param name="weight" value="0.1"/>
-        </parameterset>
-
-        <parameterset type="strategysettings">
-            <param name="strategyName" value="TimeAllocationMutator"/>
-            <param name="weight" value="0.1"/>
-        </parameterset>
+		<!-- Strategies for subpopulations -->
+		<parameterset type="strategysettings">
+			<param name="strategyName" value="ChangeExpBeta"/>
+			<param name="weight" value="0.7"/>
+			<param name="subpopulation" value="person"/>
+		</parameterset>
+		<parameterset type="strategysettings">
+			<param name="strategyName" value="ReRoute"/>
+			<param name="weight" value="0.1"/>
+			<param name="subpopulation" value="person"/>
+		</parameterset>
+		<parameterset type="strategysettings">
+			<param name="strategyName" value="SubtourModeChoice"/>
+			<param name="weight" value="0.1"/>
+			<param name="subpopulation" value="person"/>
+		</parameterset>
+		<parameterset type="strategysettings">
+			<param name="strategyName" value="TimeAllocationMutator"/>
+			<param name="weight" value="0.1"/>
+			<param name="subpopulation" value="person"/>
+		</parameterset>
 	</module>
 
 </config>
