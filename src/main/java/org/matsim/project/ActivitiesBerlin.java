@@ -67,7 +67,7 @@ public enum ActivitiesBerlin {
 	 */
 	public static void addScoringParams(Config config, boolean splitTypes) {
 
-		for (Activities value : Activities.values()) {
+		for (ActivitiesBerlin value : ActivitiesBerlin.values()) {
 			// Default length if none is given
 			config.scoring().addActivityParams(value.apply(new ScoringConfigGroup.ActivityParams(value.name())).setTypicalDuration(6 * 3600));
 
