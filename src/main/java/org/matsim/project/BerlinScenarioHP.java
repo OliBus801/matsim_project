@@ -36,6 +36,12 @@ public final class BerlinScenarioHP extends OpenBerlinScenario {
     @CommandLine.Parameters(index = "3", paramLabel = "<outputPath>", description = "Chemin vers le répertoire de sortie")
     private String outputPath;
 
+    @CommandLine.Option(names = "--firstIteration", description = "Itération de début (surcharge config.xml)")
+    private Integer firstIteration = null;
+
+    @CommandLine.Option(names = "--lastIteration", description = "Itération de fin (surcharge config.xml)")
+    private Integer lastIteration = null;
+
     private Map<String, String> theta;   // stocke k‑v après parse
 
     /* -------------------- constructeur -------------------- */
@@ -59,11 +65,23 @@ public final class BerlinScenarioHP extends OpenBerlinScenario {
         config.global().setRandomSeed(seed);
 
         /* --------- paramètres globaux / exécution --------- */
-        int lastIt = Integer.parseInt(theta.get("numberOfIterations"));
         ControllerConfigGroup ctrl = config.controller();
+
+        /* On s'occupe du nombre d'itérations */
+        int lastIt = Integer.parseInt(theta.get("numberOfIterations"));
         ctrl.setLastIteration(lastIt);
         ctrl.setWriteEventsInterval(lastIt);
         ctrl.setWritePlansInterval(lastIt);
+
+        if (firstIteration != null) {
+            ctrl.setFirstIteration(firstIteration);
+            if (lastIteration != null && lastIteration <= lastIt) {
+                ctrl.setLastIteration(lastIteration);
+                ctrl.setWriteEventsInterval(lastIteration);
+                ctrl.setWritePlansInterval(lastIteration);
+            }
+        }
+
         ctrl.setOutputDirectory(outputPath + "/simulation_" + simId);
         ctrl.setOverwriteFileSetting(OutputDirectoryHierarchy.OverwriteFileSetting.deleteDirectoryIfExists);
 
