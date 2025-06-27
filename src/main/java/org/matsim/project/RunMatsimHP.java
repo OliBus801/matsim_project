@@ -105,7 +105,9 @@ public class RunMatsimHP {
         // Logging
         controllerConfigGroup.setWriteEventsInterval(Integer.parseInt(getThetaParam("numberOfIterations")));
         controllerConfigGroup.setWritePlansInterval(Integer.parseInt(getThetaParam("numberOfIterations")));
+        controllerConfigGroup.setWriteTripsInterval(Integer.parseInt(getThetaParam("numberOfIterations")));
         countsConfigGroup.setWriteCountsInterval(Integer.parseInt(getThetaParam("numberOfIterations")));
+        
 
 
         // Modify the different hyperparameters with thetaMap values.
