@@ -66,6 +66,7 @@ public final class BerlinScenarioHP extends OpenBerlinScenario {
 
         /* --------- paramètres globaux / exécution --------- */
         ControllerConfigGroup ctrl = config.controller();
+        CountsConfigGroup counts = config.counts();
 
         /* On s'occupe du nombre d'itérations */
         int lastIt = Integer.parseInt(theta.get("numberOfIterations"));
@@ -76,7 +77,7 @@ public final class BerlinScenarioHP extends OpenBerlinScenario {
         ctrl.setWriteEventsInterval(1);
         ctrl.setWritePlansInterval(lastIt);
         ctrl.setWriteTripsInterval(1);
-        ctrl.setWriteCountsInterval(1);
+        counts.setWriteCountsInterval(1);
 
         if (firstIteration != null) {
             ctrl.setFirstIteration(firstIteration);
