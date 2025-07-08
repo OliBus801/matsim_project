@@ -70,8 +70,13 @@ public final class BerlinScenarioHP extends OpenBerlinScenario {
         /* On s'occupe du nombre d'itérations */
         int lastIt = Integer.parseInt(theta.get("numberOfIterations"));
         ctrl.setLastIteration(lastIt);
-        ctrl.setWriteEventsInterval(lastIt);
+
+        /* Logging */
+                // Logging
+        ctrl.setWriteEventsInterval(1);
         ctrl.setWritePlansInterval(lastIt);
+        ctrl.setWriteTripsInterval(1);
+        ctrl.setWriteCountsInterval(1);
 
         if (firstIteration != null) {
             ctrl.setFirstIteration(firstIteration);
@@ -83,7 +88,7 @@ public final class BerlinScenarioHP extends OpenBerlinScenario {
         }
 
         ctrl.setOutputDirectory(outputPath + "/simulation_" + simId);
-        ctrl.setOverwriteFileSetting(OutputDirectoryHierarchy.OverwriteFileSetting.deleteDirectoryIfExists);
+        ctrl.setOverwriteFileSetting(OutputDirectoryHierarchy.OverwriteFileSetting.overwriteExistingFiles);
 
         /* --------- scoring --------- */
         ScoringConfigGroup sc = config.scoring();
