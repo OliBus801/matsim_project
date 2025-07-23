@@ -43,7 +43,7 @@ public final class BerlinScenarioHP extends OpenBerlinScenario {
     private Integer lastIteration = null;
 
     @CommandLine.Option(names = "--blockID", description = "Identifiant du block d'exécution de la simulation lorsqu'on roule une même simulation en plusieurs blocs.")
-    private String blockID = null;
+    private Integer blockID = null;
 
     private Map<String, String> theta;   // stocke k‑v après parse
 
@@ -70,6 +70,7 @@ public final class BerlinScenarioHP extends OpenBerlinScenario {
         /* --------- paramètres globaux / exécution --------- */
         ControllerConfigGroup ctrl = config.controller();
         CountsConfigGroup counts = config.counts();
+        PlansConfigGroup plans = config.plans();
 
         /* On s'occupe du nombre d'itérations */
         int lastIt = Integer.parseInt(theta.get("numberOfIterations"));
@@ -81,7 +82,11 @@ public final class BerlinScenarioHP extends OpenBerlinScenario {
         ctrl.setWriteTripsInterval(1);
         counts.setWriteCountsInterval(1);
 
-        ctrl.setOutputDirectory(outputPath + "/simulation_" + simId);
+        String runPrefix = ctrl.getRunId();
+
+        String outputDirectory = outputPath + "/simulation_" + simId;
+
+        ctrl.setOutputDirectory(outputDirectory);
         ctrl.setOverwriteFileSetting(OutputDirectoryHierarchy.OverwriteFileSetting.overwriteExistingFiles);
 
         if (firstIteration != null) {
@@ -89,7 +94,9 @@ public final class BerlinScenarioHP extends OpenBerlinScenario {
             if (lastIteration != null && lastIteration <= lastIt) {
                 ctrl.setLastIteration(lastIteration);
                 ctrl.setWritePlansInterval(lastIteration);
-                ctrl.setOutputDirectory(outputPath + "/simulation_" + simId + "/batch_" + blockID)
+
+                ctrl.setOutputDirectory(outputDirectory + "/batch_" + blockID);
+                plans.setInputFile(outputDirectory + "/batch_" + (blockID - 1) + "/ITERS" + "/it." + (firstIteration) + "/" + (runPrefix) + "." + (firstIteration) + ".plans.xml.gz");
             }
         }
 
