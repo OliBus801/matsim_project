@@ -42,6 +42,9 @@ public final class BerlinScenarioHP extends OpenBerlinScenario {
     @CommandLine.Option(names = "--lastIteration", description = "Itération de fin (surcharge config.xml)")
     private Integer lastIteration = null;
 
+    @CommandLine.Option(names = "--blockID", description = "Identifiant du block d'exécution de la simulation lorsqu'on roule une même simulation en plusieurs blocs.")
+    private String blockID = null;
+
     private Map<String, String> theta;   // stocke k‑v après parse
 
     /* -------------------- constructeur -------------------- */
@@ -73,23 +76,22 @@ public final class BerlinScenarioHP extends OpenBerlinScenario {
         ctrl.setLastIteration(lastIt);
 
         /* Logging */
-                // Logging
         ctrl.setWriteEventsInterval(1);
         ctrl.setWritePlansInterval(lastIt);
         ctrl.setWriteTripsInterval(1);
         counts.setWriteCountsInterval(1);
 
+        ctrl.setOutputDirectory(outputPath + "/simulation_" + simId);
+        ctrl.setOverwriteFileSetting(OutputDirectoryHierarchy.OverwriteFileSetting.overwriteExistingFiles);
+
         if (firstIteration != null) {
             ctrl.setFirstIteration(firstIteration);
             if (lastIteration != null && lastIteration <= lastIt) {
                 ctrl.setLastIteration(lastIteration);
-                ctrl.setWriteEventsInterval(lastIteration);
                 ctrl.setWritePlansInterval(lastIteration);
+                ctrl.setOutputDirectory(outputPath + "/simulation_" + simId + "/batch_" + blockID)
             }
         }
-
-        ctrl.setOutputDirectory(outputPath + "/simulation_" + simId);
-        ctrl.setOverwriteFileSetting(OutputDirectoryHierarchy.OverwriteFileSetting.overwriteExistingFiles);
 
         /* --------- scoring --------- */
         ScoringConfigGroup sc = config.scoring();
