@@ -96,7 +96,9 @@ public final class BerlinScenarioHP extends OpenBerlinScenario {
                 ctrl.setWritePlansInterval(lastIteration);
 
                 ctrl.setOutputDirectory(outputDirectory + "/batch_" + blockID);
-                plans.setInputFile(outputDirectory + "/batch_" + (blockID - 1) + "/ITERS" + "/it." + (firstIteration) + "/" + (runPrefix) + "." + (firstIteration) + ".plans.xml.gz");
+                if (blockID != null && blockID > 0) {
+                    plans.setInputFile(outputDirectory + "/batch_" + (blockID - 1) + "/ITERS" + "/it." + (firstIteration) + "/" + (runPrefix) + "." + (firstIteration) + ".plans.xml.gz");
+                }
             }
         }
 
