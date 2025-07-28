@@ -8,7 +8,7 @@
 		<param name="lastIteration" value="100"/>
 		<param name="overwriteFiles" value="overwriteExistingFiles"/>
 		<param name="runId" value="berlin-v6.0"/>
-		<param name="outputDirectory" value="./output/berlin-v6.0-10pct"/>
+		<param name="outputDirectory" value="./output/berlin-v6.0-1pct"/>
 		<param name="writeEventsInterval" value="100"/>
 		<param name="writePlansInterval" value="100"/>
 		<param name="routingAlgorithmType" value="SpeedyALT"/>
@@ -22,7 +22,7 @@
 		<param name="inputNetworkFile" value="./berlin-v6.0-network-with-pt.xml.gz"/>
 	</module>
 	<module name="plans">
-		<param name="inputPlansFile" value="./berlin-v6.0-10pct.plans.xml.gz"/>
+		<param name="inputPlansFile" value="./berlin-v6.0-1pct.plans-initial.xml.gz"/>
 		<param name="removingUnnecessaryPlanAttributes" value="true"/>
 	</module>
 	<module name="vehicles">
@@ -54,8 +54,8 @@
 	</module>
 	<module name="qsim">
 		<param name="mainMode" value="car,freight"/>
-		<param name="flowCapacityFactor" value="0.1"/>
-		<param name="storageCapacityFactor" value="0.1"/>
+		<param name="flowCapacityFactor" value="0.01"/>
+		<param name="storageCapacityFactor" value="0.01"/>
 		<param name="numberOfThreads" value="16"/>
 		<param name="startTime" value="00:00:00"/>
 		<param name="endTime" value="36:00:00"/>
@@ -181,6 +181,7 @@
 	<module name="counts">
 		<param name="inputCountsFile" value="./berlin-v6.0-counts-car-vmz.xml"/>
 		<param name="averageCountsOverIterations" value="1" />
+		<param name="countsScaleFactor" value="0.01"/>
 	</module>
 
 	<module name="strategy">

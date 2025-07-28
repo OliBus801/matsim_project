@@ -77,10 +77,10 @@ public final class BerlinScenarioHP extends OpenBerlinScenario {
         ctrl.setLastIteration(lastIt);
 
         /* Logging */
-        ctrl.setWriteEventsInterval(1);
+        ctrl.setWriteEventsInterval(lastIt);
         ctrl.setWritePlansInterval(lastIt);
-        ctrl.setWriteTripsInterval(1);
-        counts.setWriteCountsInterval(1);
+        ctrl.setWriteTripsInterval(lastIt);
+        counts.setWriteCountsInterval(lastIt);
 
         String runPrefix = ctrl.getRunId();
 
